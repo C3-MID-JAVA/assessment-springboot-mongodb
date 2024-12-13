@@ -23,7 +23,7 @@ public class Cuenta {
     @Column(nullable = false)
     private String titular;
 
-    @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Transaccion> transacciones= new ArrayList<>();
 
 }

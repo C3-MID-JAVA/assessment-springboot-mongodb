@@ -30,6 +30,10 @@ public class CuentaServiceImpl  implements CuentaService {
 
     @Override
     public CuentaResponseDTO crearCuenta(CuentaRequestDTO cuentaRequestDTO) {
+        if (cuentaRepository.findByNumeroCuenta(cuentaRequestDTO.getNumeroCuenta()).isPresent()) {
+            throw new RuntimeException("El número de cuenta ya está registrado.");
+        }
+
         Cuenta nuevaCuenta = new Cuenta();
         nuevaCuenta.setNumeroCuenta(cuentaRequestDTO.getNumeroCuenta());
         nuevaCuenta.setSaldo(cuentaRequestDTO.getSaldoInicial());

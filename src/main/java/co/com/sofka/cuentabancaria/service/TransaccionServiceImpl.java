@@ -1,8 +1,5 @@
 package co.com.sofka.cuentabancaria.service;
 
-import co.com.sofka.cuentabancaria.dto.cuenta.CuentaResponseDTO;
-import co.com.sofka.cuentabancaria.dto.deposito.DepositoRequestDTO;
-import co.com.sofka.cuentabancaria.dto.deposito.DepositoResponseDTO;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionRequestDTO;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionResponseDTO;
 import co.com.sofka.cuentabancaria.model.Cuenta;
@@ -45,13 +42,14 @@ public class TransaccionServiceImpl implements TransaccionService {
     }
 
     @Override
-    public DepositoResponseDTO realizarDeposito(DepositoRequestDTO depositoRequestDTO) {
+    public TransaccionResponseDTO realizarDeposito(TransaccionRequestDTO depositoRequestDTO) {
         Cuenta cuenta = cuentaRepository.findById(depositoRequestDTO.getCuentaId()).orElseThrow(
                 () -> new RuntimeException("Cuenta no encontrada  con el ID: " + depositoRequestDTO.getCuentaId())
         );
 
         if(depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_CAJERO &&
-           depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_OTRA_CUENTA){
+           depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_OTRA_CUENTA &&
+           depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_SUCURSAL){
             throw new RuntimeException("Tipo de transaccion no valido");
         }
 
@@ -89,7 +87,7 @@ public class TransaccionServiceImpl implements TransaccionService {
 
         transaccionRepository.save(transaccion);
 
-        return new DepositoResponseDTO(transaccion);
+        return new TransaccionResponseDTO(transaccion);
     }
 
     @Override

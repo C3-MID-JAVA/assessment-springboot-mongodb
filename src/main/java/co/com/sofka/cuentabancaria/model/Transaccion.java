@@ -1,6 +1,7 @@
 package co.com.sofka.cuentabancaria.model;
 
 import co.com.sofka.cuentabancaria.model.enums.TipoTransaccion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +31,9 @@ public class Transaccion {
     @Column(nullable = false)
     private TipoTransaccion tipo;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "cuenta_id")
+    @JsonIgnore
     private Cuenta cuenta;
 
     public Transaccion(double monto, double costoTransaccion, LocalDateTime fecha, TipoTransaccion tipo, Cuenta cuenta) {

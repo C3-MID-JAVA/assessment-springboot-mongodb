@@ -25,6 +25,8 @@ public class TransaccionResponseDTO {
 
     private double costoTransaccion;
 
+    private double nuevoSaldo;
+
     private LocalDateTime fecha;
 
     public TransaccionResponseDTO(Transaccion transaccion) {
@@ -34,6 +36,7 @@ public class TransaccionResponseDTO {
         this.monto = transaccion.getMonto();
         this.costoTransaccion = transaccion.getCostoTransaccion();
         this.fecha = transaccion.getFecha();
+        this.nuevoSaldo = transaccion.getCuenta().getSaldo();
     }
 
 

@@ -1,7 +1,6 @@
 package co.com.sofka.cuentabancaria.controller;
 
-import co.com.sofka.cuentabancaria.dto.deposito.DepositoRequestDTO;
-import co.com.sofka.cuentabancaria.dto.deposito.DepositoResponseDTO;
+
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionRequestDTO;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionResponseDTO;
 import co.com.sofka.cuentabancaria.service.iservice.TransaccionService;
@@ -23,8 +22,8 @@ public class TransaccionController {
     }
 
     @PostMapping("/depositos")
-    public ResponseEntity <DepositoResponseDTO> realizarDeposito(@RequestBody @Valid DepositoRequestDTO depositoRequestDTO) {
-        DepositoResponseDTO deposito = transaccionService.realizarDeposito(depositoRequestDTO);
+    public ResponseEntity <TransaccionResponseDTO> realizarDeposito(@RequestBody @Valid TransaccionRequestDTO depositoRequestDTO) {
+        TransaccionResponseDTO deposito = transaccionService.realizarDeposito(depositoRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(deposito);
     }
 

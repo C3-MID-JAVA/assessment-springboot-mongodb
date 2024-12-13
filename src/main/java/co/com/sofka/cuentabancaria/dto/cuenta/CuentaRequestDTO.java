@@ -1,6 +1,7 @@
 package co.com.sofka.cuentabancaria.dto.cuenta;
 
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
@@ -11,7 +12,6 @@ import lombok.Setter;
 @Setter
 public class CuentaRequestDTO {
 
-    @Getter
     @NotNull
     @Size(min = 10, max = 10, message = "El número de cuenta debe tener 10 caracteres")
     private String numeroCuenta;
@@ -21,5 +21,6 @@ public class CuentaRequestDTO {
     private double saldoInicial;
 
     @NotNull
+    @NotBlank(message = "El titular no debe estar vacío")
     private String titular;
 }
