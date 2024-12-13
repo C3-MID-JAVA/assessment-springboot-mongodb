@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface TransaccionService {
 
+    List<TransaccionResponseDTO> obtenerTransacciones();
     DepositoResponseDTO realizarDeposito(DepositoRequestDTO depositoRequestDTO);
     TransaccionResponseDTO realizarRetiro(TransaccionRequestDTO transaccionRequestDTO);
     List<TransaccionResponseDTO> obtenerHistorialPorCuenta(Long cuentaId);

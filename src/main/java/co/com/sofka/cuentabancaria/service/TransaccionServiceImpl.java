@@ -1,5 +1,6 @@
 package co.com.sofka.cuentabancaria.service;
 
+import co.com.sofka.cuentabancaria.dto.cuenta.CuentaResponseDTO;
 import co.com.sofka.cuentabancaria.dto.deposito.DepositoRequestDTO;
 import co.com.sofka.cuentabancaria.dto.deposito.DepositoResponseDTO;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionRequestDTO;
@@ -36,10 +37,23 @@ public class TransaccionServiceImpl implements TransaccionService {
     }
 
     @Override
+    public List<TransaccionResponseDTO> obtenerTransacciones() {
+        List<Transaccion> transacciones = transaccionRepository.findAll();
+        List<TransaccionResponseDTO> transaccionResponse = transacciones.stream().
+                map(t -> new TransaccionResponseDTO(t)).collect(Collectors.toList());
+        return transaccionResponse;
+    }
+
+    @Override
     public DepositoResponseDTO realizarDeposito(DepositoRequestDTO depositoRequestDTO) {
         Cuenta cuenta = cuentaRepository.findById(depositoRequestDTO.getCuentaId()).orElseThrow(
                 () -> new RuntimeException("Cuenta no encontrada  con el ID: " + depositoRequestDTO.getCuentaId())
         );
+
+        if(depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_CAJERO &&
+           depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_OTRA_CUENTA){
+            throw new RuntimeException("Tipo de transaccion no valido");
+        }
 
         double monto = depositoRequestDTO.getMonto();
         double costoTransaccion = 0.0;
@@ -47,6 +61,8 @@ public class TransaccionServiceImpl implements TransaccionService {
             costoTransaccion = DEPOSITO_CAJERO;
         } else if (depositoRequestDTO.getTipoTransaccion() == TipoTransaccion.DEPOSITO_OTRA_CUENTA) {
             costoTransaccion = DEPOSITO_OTRA_CUENTA;
+        } else if (depositoRequestDTO.getTipoTransaccion() == TipoTransaccion.DEPOSITO_SUCURSAL) {
+            costoTransaccion = DEPOSITO_SUCURSAL;
         }
 
         cuenta.setSaldo(cuenta.getSaldo() + monto - costoTransaccion);
@@ -70,9 +86,21 @@ public class TransaccionServiceImpl implements TransaccionService {
                 () -> new RuntimeException("Cuenta no encontrada  con el ID: " + transaccionRequestDTO.getCuentaId())
         );
 
-
+        if(transaccionRequestDTO.getTipoTransaccion() != TipoTransaccion.RETIRO_CAJERO &&
+           transaccionRequestDTO.getTipoTransaccion() != TipoTransaccion.COMPRA_EN_LINEA &&
+           transaccionRequestDTO.getTipoTransaccion() != TipoTransaccion.COMPRA_FISICA){
+            throw new RuntimeException("Tipo de transaccion no valido para retiro o compra");
+        }
         double monto = transaccionRequestDTO.getMonto();
-        double costoTransaccion = RETIRO_CAJERO;
+        double costoTransaccion = 0.0;
+
+        if (transaccionRequestDTO.getTipoTransaccion() == TipoTransaccion.RETIRO_CAJERO) {
+            costoTransaccion = RETIRO_CAJERO;
+        } else if (transaccionRequestDTO.getTipoTransaccion() == TipoTransaccion.COMPRA_EN_LINEA) {
+            costoTransaccion = COMPRA_EN_LINEA;
+        } else if (transaccionRequestDTO.getTipoTransaccion() == TipoTransaccion.COMPRA_FISICA) {
+            costoTransaccion = COMPRA_FISICA;
+        }
 
         if(cuenta.getSaldo() < (monto + costoTransaccion)){
             throw new RuntimeException("Saldo insuficiente");
@@ -99,24 +127,3 @@ public class TransaccionServiceImpl implements TransaccionService {
         return transacciones.stream().map(transaccion -> new TransaccionResponseDTO(transaccion)).collect(Collectors.toList());
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

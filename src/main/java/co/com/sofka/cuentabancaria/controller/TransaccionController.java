@@ -22,10 +22,16 @@ public class TransaccionController {
         this.transaccionService = transaccionService;
     }
 
-    @PostMapping("/deposito")
+    @PostMapping("/depositos")
     public ResponseEntity <DepositoResponseDTO> realizarDeposito(@RequestBody @Valid DepositoRequestDTO depositoRequestDTO) {
         DepositoResponseDTO deposito = transaccionService.realizarDeposito(depositoRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(deposito);
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<TransaccionResponseDTO>> listarTransacciones() {
+        List<TransaccionResponseDTO> transacciones = transaccionService.obtenerTransacciones();
+        return ResponseEntity.status(HttpStatus.OK).body(transacciones);
     }
 
     @PostMapping("/retiro")

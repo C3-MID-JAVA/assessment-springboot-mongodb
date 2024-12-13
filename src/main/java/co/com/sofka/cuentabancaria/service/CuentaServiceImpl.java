@@ -7,6 +7,10 @@ import co.com.sofka.cuentabancaria.repository.CuentaRepository;
 import co.com.sofka.cuentabancaria.service.iservice.CuentaService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CuentaServiceImpl  implements CuentaService {
 
@@ -17,10 +21,18 @@ public class CuentaServiceImpl  implements CuentaService {
     }
 
     @Override
+    public List<CuentaResponseDTO> obtenerCuentas() {
+        List<Cuenta> cuentas = cuentaRepository.findAll();
+
+        List<CuentaResponseDTO> cuentasDTO = cuentas.stream().map(c -> new CuentaResponseDTO(c)).collect(Collectors.toList());
+        return cuentasDTO;
+    }
+
+    @Override
     public CuentaResponseDTO crearCuenta(CuentaRequestDTO cuentaRequestDTO) {
         Cuenta nuevaCuenta = new Cuenta();
         nuevaCuenta.setNumeroCuenta(cuentaRequestDTO.getNumeroCuenta());
-        nuevaCuenta.setSaldo(0.0);
+        nuevaCuenta.setSaldo(cuentaRequestDTO.getSaldoInicial());
         nuevaCuenta.setTitular(cuentaRequestDTO.getTitular());
 
         Cuenta cuenta = cuentaRepository.save(nuevaCuenta);
