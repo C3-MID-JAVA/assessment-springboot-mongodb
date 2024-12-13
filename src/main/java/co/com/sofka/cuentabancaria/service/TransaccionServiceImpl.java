@@ -64,16 +64,29 @@ public class TransaccionServiceImpl implements TransaccionService {
         } else if (depositoRequestDTO.getTipoTransaccion() == TipoTransaccion.DEPOSITO_SUCURSAL) {
             costoTransaccion = DEPOSITO_SUCURSAL;
         }
+        /**
+        if(cuenta.getSaldo() < (monto - costoTransaccion)){
+            throw new RuntimeException("Saldo insuficiente, tome en cuenta el costo de la transacción");
+        }
+*/
+        if(cuenta.getSaldo() + (monto - costoTransaccion)< 0){
+            throw new RuntimeException("Saldo insuficiente, tome en cuenta el costo de la transacción");
+        }
 
         cuenta.setSaldo(cuenta.getSaldo() + monto - costoTransaccion);
         cuentaRepository.save(cuenta);
-
+        /*
         Transaccion transaccion = new Transaccion();
         transaccion.setCuenta(cuenta);
         transaccion.setMonto(monto);
         transaccion.setTipo(depositoRequestDTO.getTipoTransaccion());
         transaccion.setCostoTransaccion(costoTransaccion);
         transaccion.setFecha(LocalDateTime.now());
+*/
+        Transaccion transaccion = new Transaccion(monto,
+                costoTransaccion,LocalDateTime.now(),
+                depositoRequestDTO.getTipoTransaccion(),cuenta);
+
         transaccionRepository.save(transaccion);
 
         return new DepositoResponseDTO(transaccion);
@@ -109,12 +122,17 @@ public class TransaccionServiceImpl implements TransaccionService {
         cuenta.setSaldo(cuenta.getSaldo() - monto - costoTransaccion);
         cuentaRepository.save(cuenta);
 
-        Transaccion transaccion = new Transaccion();
-        transaccion.setCuenta(cuenta);
-        transaccion.setMonto(-monto);
+
+        Transaccion transaccion = new Transaccion(monto,
+                costoTransaccion,LocalDateTime.now(),
+                transaccionRequestDTO.getTipoTransaccion(),cuenta);
+
+        /*transaccion.setCuenta(cuenta);
+        transaccion.setMonto(monto);
         transaccion.setTipo(transaccionRequestDTO.getTipoTransaccion());
         transaccion.setCostoTransaccion(costoTransaccion);
-        transaccion.setFecha(LocalDateTime.now());
+        transaccion.setFecha(LocalDateTime.now());*/
+
         transaccionRepository.save(transaccion);
 
         return new TransaccionResponseDTO(transaccion);
@@ -123,7 +141,10 @@ public class TransaccionServiceImpl implements TransaccionService {
     @Override
     public List<TransaccionResponseDTO> obtenerHistorialPorCuenta(Long cuentaId) {
         List<Transaccion> transacciones = transaccionRepository.findByCuentaId(cuentaId);
-
+        // Validar si la lista de transacciones está vacía
+        if (transacciones.isEmpty()) {
+            throw new RuntimeException("No se encontraron transacciones para la cuenta con ID: " + cuentaId);
+        }
         return transacciones.stream().map(transaccion -> new TransaccionResponseDTO(transaccion)).collect(Collectors.toList());
     }
 }
