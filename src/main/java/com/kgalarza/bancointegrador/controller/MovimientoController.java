@@ -3,6 +3,7 @@ package com.kgalarza.bancointegrador.controller;
 import com.kgalarza.bancointegrador.model.dto.MovimientoInDto;
 import com.kgalarza.bancointegrador.model.dto.MovimientoOutDto;
 import com.kgalarza.bancointegrador.service.MovimientoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,37 +22,37 @@ public class MovimientoController {
     }
 
     @PostMapping("/deposito/sucursal")
-    public ResponseEntity<MovimientoOutDto> realizarDepositoSucursal(@RequestBody MovimientoInDto movimientoInDto) {
+    public ResponseEntity<MovimientoOutDto> realizarDepositoSucursal(@Valid @RequestBody MovimientoInDto movimientoInDto) {
         MovimientoOutDto movimiento = movimientoService.realizarDepositoSucursal(movimientoInDto);
         return ResponseEntity.ok(movimiento);
     }
 
     @PostMapping("/deposito/cajero")
-    public ResponseEntity<MovimientoOutDto> realizarDepositoCajero(@RequestBody MovimientoInDto movimientoInDto) {
+    public ResponseEntity<MovimientoOutDto> realizarDepositoCajero(@Valid @RequestBody MovimientoInDto movimientoInDto) {
         MovimientoOutDto movimiento = movimientoService.realizarDepositoCajero(movimientoInDto);
         return ResponseEntity.ok(movimiento);
     }
 
     @PostMapping("/deposito/otra-cuenta")
-    public ResponseEntity<MovimientoOutDto> realizarDepositoOtraCuenta(@RequestBody MovimientoInDto movimientoInDto) {
+    public ResponseEntity<MovimientoOutDto> realizarDepositoOtraCuenta(@Valid @RequestBody MovimientoInDto movimientoInDto) {
         MovimientoOutDto movimiento = movimientoService.realizarDepositoOtraCuenta(movimientoInDto);
         return ResponseEntity.ok(movimiento);
     }
 
     @PostMapping("/compra/fisica")
-    public ResponseEntity<MovimientoOutDto> realizarCompraFisica(@RequestBody MovimientoInDto movimientoInDto) {
+    public ResponseEntity<MovimientoOutDto> realizarCompraFisica(@Valid @RequestBody MovimientoInDto movimientoInDto) {
         MovimientoOutDto movimiento = movimientoService.realizarCompraFisica(movimientoInDto);
         return ResponseEntity.ok(movimiento);
     }
 
     @PostMapping("/compra/web")
-    public ResponseEntity<MovimientoOutDto> realizarCompraWeb(@RequestBody MovimientoInDto movimientoInDto) {
+    public ResponseEntity<MovimientoOutDto> realizarCompraWeb(@Valid @RequestBody MovimientoInDto movimientoInDto) {
         MovimientoOutDto movimiento = movimientoService.realizarCompraWeb(movimientoInDto);
         return ResponseEntity.ok(movimiento);
     }
 
     @PostMapping("/retiro/cajero")
-    public ResponseEntity<MovimientoOutDto> realizarRetiroCajero(@RequestBody MovimientoInDto movimientoInDto) {
+    public ResponseEntity<MovimientoOutDto> realizarRetiroCajero(@Valid @RequestBody MovimientoInDto movimientoInDto) {
         MovimientoOutDto movimiento = movimientoService.realizarRetiroCajero(movimientoInDto);
         return ResponseEntity.ok(movimiento);
     }

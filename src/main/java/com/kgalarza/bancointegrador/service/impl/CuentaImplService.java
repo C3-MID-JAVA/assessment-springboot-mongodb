@@ -1,6 +1,9 @@
 package com.kgalarza.bancointegrador.service.impl;
 
+import com.kgalarza.bancointegrador.exception.RecursoNoEncontradoException;
+import com.kgalarza.bancointegrador.mapper.ClienteMapper;
 import com.kgalarza.bancointegrador.mapper.CuentaMapper;
+import com.kgalarza.bancointegrador.model.dto.ClienteOutDto;
 import com.kgalarza.bancointegrador.model.dto.CuentaInDto;
 import com.kgalarza.bancointegrador.model.dto.CuentaOutDto;
 import com.kgalarza.bancointegrador.model.entity.Cliente;
@@ -29,7 +32,7 @@ public class CuentaImplService implements CuentaService {
     @Override
     public CuentaOutDto crearCuenta(CuentaInDto cuentaInDto) {
         Cliente cliente = clienteRepository.findById(cuentaInDto.getClienteId())
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: " + cuentaInDto.getClienteId()));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Cliente no encontrado con ID: " + cuentaInDto.getClienteId()));
 
         Cuenta cuenta = CuentaMapper.toEntity(cuentaInDto, cliente);
 
@@ -38,17 +41,23 @@ public class CuentaImplService implements CuentaService {
         return CuentaMapper.toDto(cuentaGuardada);
     }
 
+
     @Override
     public List<CuentaOutDto> obtenerTodasLasCuentas() {
-        return cuentaRepository.findAll().stream()
+        List<CuentaOutDto> cuentas = cuentaRepository.findAll().stream()
                 .map(CuentaMapper::toDto)
                 .collect(Collectors.toList());
-    }
 
+        if (cuentas.isEmpty()) {
+            throw new RecursoNoEncontradoException("No existen cuentas registradas.");
+        }
+
+        return cuentas;
+    }
     @Override
     public CuentaOutDto obtenerCuentaPorId(Long id) {
         Cuenta cuenta = cuentaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con ID: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Cuenta no encontrada con ID: " + id));
 
         return CuentaMapper.toDto(cuenta);
     }
@@ -56,14 +65,14 @@ public class CuentaImplService implements CuentaService {
     @Override
     public CuentaOutDto actualizarCuenta(Long id, CuentaInDto cuentaInDto) {
         Cuenta cuentaExistente = cuentaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con ID: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Cuenta no encontrada con ID: " + id));
 
         cuentaExistente.setNumeroCuenta(cuentaInDto.getNumeroCuenta());
         cuentaExistente.setSaldo(cuentaInDto.getSaldo());
 
         if (cuentaInDto.getClienteId() != null) {
             Cliente cliente = clienteRepository.findById(cuentaInDto.getClienteId())
-                    .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: " + cuentaInDto.getClienteId()));
+                    .orElseThrow(() -> new RecursoNoEncontradoException("Cliente no encontrado con ID: " + cuentaInDto.getClienteId()));
             cuentaExistente.setCliente(cliente);
         }
 
@@ -75,7 +84,7 @@ public class CuentaImplService implements CuentaService {
     @Override
     public void eliminarCuenta(Long id) {
         Cuenta cuenta = cuentaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con ID: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Cuenta no encontrada con ID: " + id));
 
         cuentaRepository.delete(cuenta);
     }

@@ -14,15 +14,11 @@ public interface ClienteService {
 
     ClienteOutDto guardarCliente(ClienteInDto clienteInDto);
 
-
     List<ClienteOutDto> obtenerTodos();
-
 
     ClienteOutDto obtenerPorId(Long id);
 
-
     ClienteOutDto actualizarCliente(Long id, ClienteInDto clienteInDto);
-
 
     void eliminarCliente(Long id);
 }

@@ -13,6 +13,9 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
+    private String identificacion;
+
     private String nombre;
 
     private String apellido;
@@ -31,17 +34,7 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cuenta> cuentas;
 
-    public Cliente(String nombre, String apellido, String email, String telefono, String direccion, LocalDate fechaNacimiento) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
     public Cliente() {
-
     }
 
     public Long getId() {
@@ -50,6 +43,14 @@ public class Cliente {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
     }
 
     public String getNombre() {

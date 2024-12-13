@@ -3,6 +3,7 @@ package com.kgalarza.bancointegrador.controller;
 import com.kgalarza.bancointegrador.model.dto.CuentaInDto;
 import com.kgalarza.bancointegrador.model.dto.CuentaOutDto;
 import com.kgalarza.bancointegrador.service.CuentaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class CuentaController {
     }
 
     @PostMapping
-    public ResponseEntity<CuentaOutDto> crearCuenta(@RequestBody CuentaInDto cuentaInDto) {
+    public ResponseEntity<CuentaOutDto> crearCuenta(@Valid @RequestBody CuentaInDto cuentaInDto) {
         CuentaOutDto nuevaCuenta = cuentaService.crearCuenta(cuentaInDto);
         return ResponseEntity.ok(nuevaCuenta);
     }
@@ -34,31 +35,20 @@ public class CuentaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CuentaOutDto> obtenerCuentaPorId(@PathVariable Long id) {
-        try {
-            CuentaOutDto cuenta = cuentaService.obtenerCuentaPorId(id);
-            return ResponseEntity.ok(cuenta);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        CuentaOutDto cuenta = cuentaService.obtenerCuentaPorId(id);
+        return ResponseEntity.ok(cuenta);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CuentaOutDto> actualizarCuenta(@PathVariable Long id, @RequestBody CuentaInDto cuentaInDto) {
-        try {
-            CuentaOutDto cuentaActualizada = cuentaService.actualizarCuenta(id, cuentaInDto);
-            return ResponseEntity.ok(cuentaActualizada);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<CuentaOutDto> actualizarCuenta(@PathVariable Long id, @Valid @RequestBody CuentaInDto cuentaInDto) {
+        CuentaOutDto cuentaActualizada = cuentaService.actualizarCuenta(id, cuentaInDto);
+        return ResponseEntity.ok(cuentaActualizada);
+
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarCuenta(@PathVariable Long id) {
-        try {
-            cuentaService.eliminarCuenta(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        cuentaService.eliminarCuenta(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TarjetaMapper {
 
-    public Tarjeta mapToEntity(TarjetaInDto tarjetaInDto, Cuenta cuenta) {
+    public static Tarjeta mapToEntity(TarjetaInDto tarjetaInDto, Cuenta cuenta) {
         Tarjeta tarjeta = new Tarjeta();
         tarjeta.setNumeroTarjeta(tarjetaInDto.getNumeroTarjeta());
         tarjeta.setTipo(tarjetaInDto.getTipo());
@@ -17,7 +17,7 @@ public class TarjetaMapper {
         return tarjeta;
     }
 
-    public TarjetaOutDto mapToDto(Tarjeta tarjeta) {
+    public static TarjetaOutDto mapToDto(Tarjeta tarjeta) {
         TarjetaOutDto dto = new TarjetaOutDto();
         dto.setId(tarjeta.getId());
         dto.setNumeroTarjeta(tarjeta.getNumeroTarjeta());

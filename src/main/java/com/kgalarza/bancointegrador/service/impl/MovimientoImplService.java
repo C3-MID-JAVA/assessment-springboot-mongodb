@@ -1,5 +1,6 @@
 package com.kgalarza.bancointegrador.service.impl;
 
+import com.kgalarza.bancointegrador.exception.RecursoNoEncontradoException;
 import com.kgalarza.bancointegrador.model.dto.MovimientoInDto;
 import com.kgalarza.bancointegrador.model.dto.MovimientoOutDto;
 import com.kgalarza.bancointegrador.model.entity.Cuenta;
@@ -7,6 +8,7 @@ import com.kgalarza.bancointegrador.model.entity.Movimiento;
 import com.kgalarza.bancointegrador.repository.CuentaRepository;
 import com.kgalarza.bancointegrador.repository.MovimientoRepository;
 import com.kgalarza.bancointegrador.service.MovimientoService;
+import com.kgalarza.bancointegrador.util.CostosTransaccion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.kgalarza.bancointegrador.mapper.MovimientoMapper;
@@ -25,32 +27,32 @@ public class MovimientoImplService implements MovimientoService {
 
     @Override
     public MovimientoOutDto realizarDepositoSucursal(MovimientoInDto movimientoInDto) {
-        return realizarTransaccion(movimientoInDto, 0.0);
+        return realizarTransaccion(movimientoInDto, CostosTransaccion.DEPOSITO_SUCURSAL.getCosto());
     }
 
     @Override
     public MovimientoOutDto realizarDepositoCajero(MovimientoInDto movimientoInDto) {
-        return realizarTransaccion(movimientoInDto, 2.0);
+        return realizarTransaccion(movimientoInDto,  CostosTransaccion.DEPOSITO_CAJERO.getCosto());
     }
 
     @Override
     public MovimientoOutDto realizarDepositoOtraCuenta(MovimientoInDto movimientoInDto) {
-        return realizarTransaccion(movimientoInDto, 1.5);
+        return realizarTransaccion(movimientoInDto, CostosTransaccion.DEPOSITO_OTRA_CUENTA.getCosto());
     }
 
     @Override
     public MovimientoOutDto realizarCompraFisica(MovimientoInDto movimientoInDto) {
-        return realizarTransaccion(movimientoInDto, 0.0, false);
+        return realizarTransaccion(movimientoInDto, CostosTransaccion.COMPRA_FISICA.getCosto(), false);
     }
 
     @Override
     public MovimientoOutDto realizarCompraWeb(MovimientoInDto movimientoInDto) {
-        return realizarTransaccion(movimientoInDto, 5.0, false);
+        return realizarTransaccion(movimientoInDto, CostosTransaccion.COMPRA_WEB.getCosto(), false);
     }
 
     @Override
     public MovimientoOutDto realizarRetiroCajero(MovimientoInDto movimientoInDto) {
-        return realizarTransaccion(movimientoInDto, 1.0, false);
+        return realizarTransaccion(movimientoInDto, CostosTransaccion.RETIRO_CAJERO.getCosto(), false);
     }
 
     private MovimientoOutDto realizarTransaccion(MovimientoInDto movimientoInDto, double costoTransaccion) {
@@ -59,14 +61,14 @@ public class MovimientoImplService implements MovimientoService {
 
     private MovimientoOutDto realizarTransaccion(MovimientoInDto movimientoInDto, double costoTransaccion, boolean esDeposito) {
         Cuenta cuenta = cuentaRepository.findById(movimientoInDto.getCuentaId())
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con ID: " + movimientoInDto.getCuentaId()));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Cuenta no encontrada con ID: " + movimientoInDto.getCuentaId()));
 
         double saldoAfectado = esDeposito
                 ? movimientoInDto.getMonto() - costoTransaccion
                 : -movimientoInDto.getMonto() - costoTransaccion;
 
         if (cuenta.getSaldo() + saldoAfectado < 0) {
-            throw new RuntimeException("Saldo insuficiente para realizar la transacción.");
+            throw new RecursoNoEncontradoException("Saldo insuficiente para realizar la transacción.");
         }
 
         cuenta.setSaldo(cuenta.getSaldo() + saldoAfectado);
@@ -74,7 +76,8 @@ public class MovimientoImplService implements MovimientoService {
 
         Movimiento movimiento = new Movimiento();
         movimiento.setDescripcion(movimientoInDto.getDescripcion());
-        movimiento.setMonto(movimientoInDto.getMonto());
+        //movimiento.setMonto(movimientoInDto.getMonto());
+        movimiento.setMonto(saldoAfectado);
         movimiento.setTipoMovimiento(movimientoInDto.getTipoMovimiento());
         movimiento.setFecha(movimientoInDto.getFecha());
         movimiento.setCuenta(cuenta);
