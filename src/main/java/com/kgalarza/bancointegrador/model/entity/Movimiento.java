@@ -11,7 +11,7 @@ public class Movimiento {
 
     private String descripcion;
     private Double monto;
-    private String tipoMovimiento; // Ingreso o Egreso
+    private String tipoMovimiento;
 
     @ManyToOne
     @JoinColumn(name = "cuenta_id", nullable = false)

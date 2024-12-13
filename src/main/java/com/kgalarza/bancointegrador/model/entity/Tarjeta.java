@@ -11,7 +11,7 @@ public class Tarjeta {
     private Long id;
 
     private String numeroTarjeta;
-    private String tipo; // Crédito o Débito
+    private String tipo;
 
     @OneToOne
     @JoinColumn(name = "cuenta_id", nullable = false)
