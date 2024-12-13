@@ -6,6 +6,7 @@ import com.kgalarza.bancointegrador.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -19,6 +20,7 @@ public class CuentaController {
         this.cuentaService = cuentaService;
     }
 
+    @PostMapping
     public ResponseEntity<CuentaOutDto> crearCuenta(@RequestBody CuentaInDto cuentaInDto) {
         CuentaOutDto nuevaCuenta = cuentaService.crearCuenta(cuentaInDto);
         return ResponseEntity.ok(nuevaCuenta);

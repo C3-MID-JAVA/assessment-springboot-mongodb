@@ -2,20 +2,34 @@ package com.kgalarza.bancointegrador.model.dto;
 
 import com.kgalarza.bancointegrador.model.entity.Cuenta;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class ClienteInDto {
 
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     private String nombre;
+
+    @NotBlank(message = "El apellido no puede estar vacío")
+    @Size(min = 2, max = 50, message = "El apellido debe tener entre 2 y 50 caracteres")
     private String apellido;
+
+    @Email(message = "El correo electrónico no tiene un formato válido")
+    @NotBlank(message = "El correo electrónico no puede estar vacío")
     private String email;
+
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "El número de teléfono no tiene un formato válido")
     private String telefono;
+
+    @NotBlank(message = "La dirección no puede estar vacía")
     private String direccion;
+
+    //@Past(message = "La fecha de nacimiento debe ser una fecha pasada")
     private LocalDate fechaNacimiento;
 
-    // Getters y Setters
     public String getNombre() {
         return nombre;
     }

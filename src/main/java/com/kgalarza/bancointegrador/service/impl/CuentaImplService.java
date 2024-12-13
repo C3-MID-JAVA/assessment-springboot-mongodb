@@ -9,10 +9,12 @@ import com.kgalarza.bancointegrador.repository.ClienteRepository;
 import com.kgalarza.bancointegrador.repository.CuentaRepository;
 import com.kgalarza.bancointegrador.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class CuentaImplService implements CuentaService {
 
     private final CuentaRepository cuentaRepository;

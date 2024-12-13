@@ -4,6 +4,7 @@ import com.kgalarza.bancointegrador.model.dto.ClienteInDto;
 import com.kgalarza.bancointegrador.model.dto.ClienteOutDto;
 import com.kgalarza.bancointegrador.model.entity.Cliente;
 import com.kgalarza.bancointegrador.service.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
     @PostMapping
-    public ResponseEntity<ClienteOutDto> crearCliente(@RequestBody ClienteInDto clienteInDto) {
+    public ResponseEntity<ClienteOutDto> crearCliente(@Valid @RequestBody ClienteInDto clienteInDto) {
         ClienteOutDto clienteGuardado = clienteService.guardarCliente(clienteInDto);
         return ResponseEntity.ok(clienteGuardado);
     }

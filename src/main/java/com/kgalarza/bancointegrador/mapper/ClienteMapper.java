@@ -4,10 +4,12 @@ import com.kgalarza.bancointegrador.model.dto.ClienteInDto;
 import com.kgalarza.bancointegrador.model.dto.ClienteOutDto;
 import com.kgalarza.bancointegrador.model.entity.Cliente;
 import com.kgalarza.bancointegrador.model.entity.Cuenta;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ClienteMapper {
 
     public static Cliente toEntity(ClienteInDto dto) {
