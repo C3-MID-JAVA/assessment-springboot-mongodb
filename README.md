@@ -1,6 +1,6 @@
 # Assessment-springboot-mongodb
 ## Entrega de assessment #5
-Creación de una aplicación de manejo de cuenta bancaria con Springboot y MongoDB: Migración.
+Aplicación de manejo de cuenta bancaria con Springboot y MongoDB: Migración.
 
 ## Consideraciones
 
