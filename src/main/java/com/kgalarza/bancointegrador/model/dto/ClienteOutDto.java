@@ -1,49 +1,22 @@
-package com.kgalarza.bancointegrador.model.entity;
+package com.kgalarza.bancointegrador.model.dto;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import com.kgalarza.bancointegrador.model.entity.Cuenta;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-public class Cliente {
+public class ClienteOutDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nombre;
-
     private String apellido;
-
-    @Column(unique = true, nullable = false)
     private String email;
-
-    @Column(nullable = false)
     private String telefono;
-
     private String direccion;
-
-    @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
+    private List<Long> cuentasIds; // IDs de las cuentas asociadas
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cuenta> cuentas;
-
-    public Cliente(String nombre, String apellido, String email, String telefono, String direccion, LocalDate fechaNacimiento) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public Cliente() {
-
-    }
-
+    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -100,11 +73,11 @@ public class Cliente {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public List<Cuenta> getCuentas() {
-        return cuentas;
+    public List<Long> getCuentasIds() {
+        return cuentasIds;
     }
 
-    public void setCuentas(List<Cuenta> cuentas) {
-        this.cuentas = cuentas;
+    public void setCuentasIds(List<Long> cuentasIds) {
+        this.cuentasIds = cuentasIds;
     }
 }
