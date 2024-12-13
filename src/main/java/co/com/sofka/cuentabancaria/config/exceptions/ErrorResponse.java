@@ -1,6 +1,5 @@
 package co.com.sofka.cuentabancaria.config.exceptions;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

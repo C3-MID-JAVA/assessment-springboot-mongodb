@@ -1,5 +1,6 @@
 package co.com.sofka.cuentabancaria.service;
 
+import co.com.sofka.cuentabancaria.config.exceptions.ConflictException;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionRequestDTO;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionResponseDTO;
 import co.com.sofka.cuentabancaria.model.Cuenta;
@@ -7,12 +8,12 @@ import co.com.sofka.cuentabancaria.model.Transaccion;
 import co.com.sofka.cuentabancaria.model.enums.TipoTransaccion;
 import co.com.sofka.cuentabancaria.repository.CuentaRepository;
 import co.com.sofka.cuentabancaria.repository.TransaccionRepository;
-import co.com.sofka.cuentabancaria.service.iservice.CuentaService;
 import co.com.sofka.cuentabancaria.service.iservice.TransaccionService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,13 +45,13 @@ public class TransaccionServiceImpl implements TransaccionService {
     @Override
     public TransaccionResponseDTO realizarDeposito(TransaccionRequestDTO depositoRequestDTO) {
         Cuenta cuenta = cuentaRepository.findById(depositoRequestDTO.getCuentaId()).orElseThrow(
-                () -> new RuntimeException("Cuenta no encontrada  con el ID: " + depositoRequestDTO.getCuentaId())
+                () -> new NoSuchElementException("Cuenta no encontrada  con el ID: " + depositoRequestDTO.getCuentaId())
         );
 
         if(depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_CAJERO &&
            depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_OTRA_CUENTA &&
            depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_SUCURSAL){
-            throw new RuntimeException("Tipo de transaccion no valido");
+            throw new ConflictException("Tipo de transaccion no valido");
         }
 
         double monto = depositoRequestDTO.getMonto();
@@ -68,7 +69,7 @@ public class TransaccionServiceImpl implements TransaccionService {
         }
 */
         if(cuenta.getSaldo() + (monto - costoTransaccion)< 0){
-            throw new RuntimeException("Saldo insuficiente, tome en cuenta el costo de la transacción");
+            throw new ConflictException("Saldo insuficiente, tome en cuenta el costo de la transacción");
         }
 
         cuenta.setSaldo(cuenta.getSaldo() + monto - costoTransaccion);
@@ -94,13 +95,13 @@ public class TransaccionServiceImpl implements TransaccionService {
     public TransaccionResponseDTO realizarRetiro(TransaccionRequestDTO transaccionRequestDTO) {
 
         Cuenta cuenta = cuentaRepository.findById(transaccionRequestDTO.getCuentaId()).orElseThrow(
-                () -> new RuntimeException("Cuenta no encontrada  con el ID: " + transaccionRequestDTO.getCuentaId())
+                () -> new NoSuchElementException("Cuenta no encontrada  con el ID: " + transaccionRequestDTO.getCuentaId())
         );
 
         if(transaccionRequestDTO.getTipoTransaccion() != TipoTransaccion.RETIRO_CAJERO &&
            transaccionRequestDTO.getTipoTransaccion() != TipoTransaccion.COMPRA_EN_LINEA &&
            transaccionRequestDTO.getTipoTransaccion() != TipoTransaccion.COMPRA_FISICA){
-            throw new RuntimeException("Tipo de transaccion no valido para retiro o compra");
+            throw new ConflictException("Tipo de transaccion no valido para retiro o compra");
         }
         double monto = transaccionRequestDTO.getMonto();
         double costoTransaccion = 0.0;
@@ -114,7 +115,7 @@ public class TransaccionServiceImpl implements TransaccionService {
         }
 
         if(cuenta.getSaldo() < (monto + costoTransaccion)){
-            throw new RuntimeException("Saldo insuficiente");
+            throw new ConflictException("Saldo insuficiente");
         }
 
         cuenta.setSaldo(cuenta.getSaldo() - monto - costoTransaccion);
@@ -141,7 +142,7 @@ public class TransaccionServiceImpl implements TransaccionService {
         List<Transaccion> transacciones = transaccionRepository.findByCuentaId(cuentaId);
         // Validar si la lista de transacciones está vacía
         if (transacciones.isEmpty()) {
-            throw new RuntimeException("No se encontraron transacciones para la cuenta con ID: " + cuentaId);
+            throw new NoSuchElementException("No se encontraron transacciones para la cuenta con ID: " + cuentaId);
         }
         return transacciones.stream().map(transaccion -> new TransaccionResponseDTO(transaccion)).collect(Collectors.toList());
     }
