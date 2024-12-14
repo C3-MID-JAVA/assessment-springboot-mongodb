@@ -63,25 +63,14 @@ public class TransaccionServiceImpl implements TransaccionService {
         } else if (depositoRequestDTO.getTipoTransaccion() == TipoTransaccion.DEPOSITO_SUCURSAL) {
             costoTransaccion = DEPOSITO_SUCURSAL;
         }
-        /**
-        if(cuenta.getSaldo() < (monto - costoTransaccion)){
-            throw new RuntimeException("Saldo insuficiente, tome en cuenta el costo de la transacción");
-        }
-*/
+
         if(cuenta.getSaldo() + (monto - costoTransaccion)< 0){
             throw new ConflictException("Saldo insuficiente, tome en cuenta el costo de la transacción");
         }
 
         cuenta.setSaldo(cuenta.getSaldo() + monto - costoTransaccion);
         cuentaRepository.save(cuenta);
-        /*
-        Transaccion transaccion = new Transaccion();
-        transaccion.setCuenta(cuenta);
-        transaccion.setMonto(monto);
-        transaccion.setTipo(depositoRequestDTO.getTipoTransaccion());
-        transaccion.setCostoTransaccion(costoTransaccion);
-        transaccion.setFecha(LocalDateTime.now());
-*/
+
         Transaccion transaccion = new Transaccion(monto,
                 costoTransaccion,LocalDateTime.now(),
                 depositoRequestDTO.getTipoTransaccion(),cuenta);
@@ -126,11 +115,7 @@ public class TransaccionServiceImpl implements TransaccionService {
                 costoTransaccion,LocalDateTime.now(),
                 transaccionRequestDTO.getTipoTransaccion(),cuenta);
 
-        /*transaccion.setCuenta(cuenta);
-        transaccion.setMonto(monto);
-        transaccion.setTipo(transaccionRequestDTO.getTipoTransaccion());
-        transaccion.setCostoTransaccion(costoTransaccion);
-        transaccion.setFecha(LocalDateTime.now());*/
+
 
         transaccionRepository.save(transaccion);
 

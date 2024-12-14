@@ -13,12 +13,6 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler{
-    /*
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
-        // Devolver el mensaje de la excepción y un código de estado HTTP adecuado
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-    }*/
 
     // Manejo de errores de validación de parámetros
     @ExceptionHandler(MethodArgumentNotValidException.class)
