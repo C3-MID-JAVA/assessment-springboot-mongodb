@@ -22,7 +22,8 @@ public class TransaccionController {
     }
 
     @PostMapping("/depositos")
-    public ResponseEntity <TransaccionResponseDTO> realizarDeposito(@RequestBody @Valid TransaccionRequestDTO depositoRequestDTO) {
+    public ResponseEntity<TransaccionResponseDTO> realizarDeposito(@RequestBody @Valid TransaccionRequestDTO depositoRequestDTO) {
+
         TransaccionResponseDTO deposito = transaccionService.realizarDeposito(depositoRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(deposito);
     }

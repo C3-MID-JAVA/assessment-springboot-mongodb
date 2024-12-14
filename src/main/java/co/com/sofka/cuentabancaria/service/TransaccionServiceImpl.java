@@ -57,6 +57,10 @@ public class TransaccionServiceImpl implements TransaccionService {
 
     @Override
     public TransaccionResponseDTO realizarDeposito(TransaccionRequestDTO depositoRequestDTO) {
+        if (depositoRequestDTO == null) {
+            throw new IllegalArgumentException("El cuerpo de la solicitud no puede ser nulo");
+        }
+
         Cuenta cuenta = cuentaRepository.findById(depositoRequestDTO.getCuentaId()).orElseThrow(
                 () -> new NoSuchElementException("Cuenta no encontrada  con el ID: " + depositoRequestDTO.getCuentaId())
         );
