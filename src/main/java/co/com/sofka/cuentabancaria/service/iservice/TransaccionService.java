@@ -11,5 +11,5 @@ public interface TransaccionService {
     List<TransaccionResponseDTO> obtenerTransacciones();
     TransaccionResponseDTO realizarDeposito(TransaccionRequestDTO transaccionRequestDTO);
     TransaccionResponseDTO realizarRetiro(TransaccionRequestDTO transaccionRequestDTO);
-    List<TransaccionResponseDTO> obtenerHistorialPorCuenta(Long cuentaId);
+    List<TransaccionResponseDTO> obtenerHistorialPorCuenta(String cuentaId);
 }

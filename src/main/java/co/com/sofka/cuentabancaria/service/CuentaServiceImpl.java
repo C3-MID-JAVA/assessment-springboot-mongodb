@@ -8,6 +8,7 @@ import co.com.sofka.cuentabancaria.repository.CuentaRepository;
 import co.com.sofka.cuentabancaria.service.iservice.CuentaService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class CuentaServiceImpl  implements CuentaService {
     }
 
     @Override
-    public CuentaResponseDTO obtenerCuentaPorId(Long id) {
+    public CuentaResponseDTO obtenerCuentaPorId(String id) {
 
         Cuenta cuenta = cuentaRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("No se encontro el cuenta con id: " + id)
@@ -55,7 +56,7 @@ public class CuentaServiceImpl  implements CuentaService {
     }
 
     @Override
-    public double consultarSaldo(Long id) {
+    public BigDecimal consultarSaldo(String id) {
         Cuenta cuenta = cuentaRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("No se encontro el cuenta con id: " + id)
         );

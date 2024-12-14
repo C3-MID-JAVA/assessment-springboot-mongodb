@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 public class CuentaRequestDTO {
@@ -18,7 +20,7 @@ public class CuentaRequestDTO {
 
     @NotNull
     @PositiveOrZero(message = "El saldo inicial debe ser mayor o igual a cero")
-    private double saldoInicial;
+    private BigDecimal saldoInicial;
 
     @NotNull
     @NotBlank(message = "El titular no debe estar vacío")

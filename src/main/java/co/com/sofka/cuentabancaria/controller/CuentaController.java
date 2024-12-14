@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -36,14 +37,14 @@ public class CuentaController {
     }
 
     @GetMapping("/listar/{id}")
-    public ResponseEntity<CuentaResponseDTO> obtenerCuentaPorId(@PathVariable("id") Long id) {
+    public ResponseEntity<CuentaResponseDTO> obtenerCuentaPorId(@PathVariable("id") String id) {
         CuentaResponseDTO cuenta = cuentaService.obtenerCuentaPorId(id);
         return ResponseEntity.status(HttpStatus.OK).body(cuenta);
     }
 
     @GetMapping("/listar/{id}/saldo")
-    public ResponseEntity<Double> consultarSaldo(@PathVariable Long id) {
-        double cuenta = cuentaService.consultarSaldo(id);
+    public ResponseEntity<BigDecimal> consultarSaldo(@PathVariable String id) {
+        BigDecimal cuenta = cuentaService.consultarSaldo(id);
         return ResponseEntity.status(HttpStatus.OK).body(cuenta);
     }
 

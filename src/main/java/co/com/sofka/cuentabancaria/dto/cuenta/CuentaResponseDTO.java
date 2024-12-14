@@ -5,16 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class CuentaResponseDTO {
 
-    private Long id;
+    private String id;
 
     private String numeroCuenta;
 
-    private double saldo;
+    private BigDecimal saldo;
 
     private String titular;
 

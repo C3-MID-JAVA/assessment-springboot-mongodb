@@ -40,7 +40,7 @@ public class TransaccionController {
     }
 
     @GetMapping("/cuenta/{cuentaId}")
-    public ResponseEntity<List<TransaccionResponseDTO>> obtenerHistorialPorCuenta(@PathVariable Long cuentaId) {
+    public ResponseEntity<List<TransaccionResponseDTO>> obtenerHistorialPorCuenta(@PathVariable String cuentaId) {
         List<TransaccionResponseDTO> transaccionResponseDTO = transaccionService.obtenerHistorialPorCuenta(cuentaId);
         return ResponseEntity.ok(transaccionResponseDTO);
     }
