@@ -80,7 +80,7 @@ public class MovimientoImplService implements MovimientoService {
         movimiento.setMonto(saldoAfectado);
         movimiento.setTipoMovimiento(movimientoInDto.getTipoMovimiento());
         movimiento.setFecha(movimientoInDto.getFecha());
-        movimiento.setCuenta(cuenta);
+//        movimiento.setCuenta(cuenta);
         movimientoRepository.save(movimiento);
 
         return MovimientoMapper.mapToDto(movimiento);

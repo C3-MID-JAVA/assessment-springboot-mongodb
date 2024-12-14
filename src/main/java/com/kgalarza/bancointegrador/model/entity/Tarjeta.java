@@ -1,27 +1,23 @@
 package com.kgalarza.bancointegrador.model.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document(collection = "tarjetas")
 public class Tarjeta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String numeroTarjeta;
     private String tipo;
-
-    @OneToOne
-    @JoinColumn(name = "cuenta_id", nullable = false)
     private Cuenta cuenta;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -46,7 +46,7 @@ public class ClienteImplService implements ClienteService {
 
 
     @Override
-    public ClienteOutDto obtenerPorId(Long id) {
+    public ClienteOutDto obtenerPorId(String id) {
 
         return clienteRepository.findById(id)
                 .map(ClienteMapper::toDto)
@@ -55,7 +55,7 @@ public class ClienteImplService implements ClienteService {
 
 
     @Override
-    public ClienteOutDto actualizarCliente(Long id, ClienteInDto clienteInDto) {
+    public ClienteOutDto actualizarCliente(String id, ClienteInDto clienteInDto) {
         return clienteRepository.findById(id)
                 .map(cliente -> {
 
@@ -71,7 +71,7 @@ public class ClienteImplService implements ClienteService {
     }
 
     @Override
-    public void eliminarCliente(Long id) {
+    public void eliminarCliente(String id) {
         if (!clienteRepository.existsById(id)) {
             throw new RecursoNoEncontradoException("Cliente no encontrado con ID: " + id);
         }

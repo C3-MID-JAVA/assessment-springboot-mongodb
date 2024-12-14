@@ -16,7 +16,7 @@ public class CuentaMapper {
         Cuenta cuenta = new Cuenta();
         cuenta.setNumeroCuenta(dto.getNumeroCuenta());
         cuenta.setSaldo(dto.getSaldo());
-        cuenta.setCliente(cliente);
+//        cuenta.setCliente(cliente);
         return cuenta;
     }
 
@@ -25,18 +25,18 @@ public class CuentaMapper {
         dto.setId(cuenta.getId());
         dto.setNumeroCuenta(cuenta.getNumeroCuenta());
         dto.setSaldo(cuenta.getSaldo());
-        dto.setClienteId(cuenta.getCliente().getId());
+//        dto.setClienteId(cuenta.getCliente().getId());
 
-        if (cuenta.getMovimientos() != null) {
-            List<Long> movimientosIds = cuenta.getMovimientos().stream()
-                    .map(Movimiento::getId)
-                    .collect(Collectors.toList());
-            dto.setMovimientosIds(movimientosIds);
-        }
+//        if (cuenta.getMovimientos() != null) {
+//            List<Long> movimientosIds = cuenta.getMovimientos().stream()
+//                    .map(Movimiento::getId)
+//                    .collect(Collectors.toList());
+//            dto.setMovimientosIds(movimientosIds);
+//        }
 
-        if (cuenta.getTarjeta() != null) {
-            dto.setTarjetaId(cuenta.getTarjeta().getId());
-        }
+//        if (cuenta.getTarjeta() != null) {
+//            dto.setTarjetaId(cuenta.getTarjeta().getId());
+//        }
 
         return dto;
     }

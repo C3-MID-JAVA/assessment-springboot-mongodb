@@ -1,7 +1,6 @@
 package com.kgalarza.bancointegrador.model.dto;
 
 import com.kgalarza.bancointegrador.model.entity.Cuenta;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 

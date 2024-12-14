@@ -26,7 +26,7 @@ public class ClienteMapper {
 
     public static ClienteOutDto toDto(Cliente cliente) {
         ClienteOutDto dto = new ClienteOutDto();
-        dto.setId(cliente.getId());
+        dto.setId(Long.valueOf(cliente.getId()));
         dto.setIdentificacion(cliente.getIdentificacion());
         dto.setNombre(cliente.getNombre());
         dto.setApellido(cliente.getApellido());
@@ -34,12 +34,12 @@ public class ClienteMapper {
         dto.setTelefono(cliente.getTelefono());
         dto.setDireccion(cliente.getDireccion());
         dto.setFechaNacimiento(cliente.getFechaNacimiento());
-        if (cliente.getCuentas() != null) {
-            List<Long> cuentasIds = cliente.getCuentas().stream()
-                    .map(Cuenta::getId)
-                    .collect(Collectors.toList());
-            dto.setCuentasIds(cuentasIds);
-        }
+//        if (cliente.getCuentas() != null) {
+//            List<Long> cuentasIds = cliente.getCuentas().stream()
+//                    .map(Cuenta::getId)
+//                    .collect(Collectors.toList());
+//            dto.setCuentasIds(cuentasIds);
+//        }
         return dto;
     }
 }

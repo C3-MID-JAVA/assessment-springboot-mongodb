@@ -16,9 +16,9 @@ public interface ClienteService {
 
     List<ClienteOutDto> obtenerTodos();
 
-    ClienteOutDto obtenerPorId(Long id);
+    ClienteOutDto obtenerPorId(String id);
 
-    ClienteOutDto actualizarCliente(Long id, ClienteInDto clienteInDto);
+    ClienteOutDto actualizarCliente(String id, ClienteInDto clienteInDto);
 
-    void eliminarCliente(Long id);
+    void eliminarCliente(String id);
 }

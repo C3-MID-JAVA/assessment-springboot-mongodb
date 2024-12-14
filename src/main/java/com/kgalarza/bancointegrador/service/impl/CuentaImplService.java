@@ -31,7 +31,7 @@ public class CuentaImplService implements CuentaService {
 
     @Override
     public CuentaOutDto crearCuenta(CuentaInDto cuentaInDto) {
-        Cliente cliente = clienteRepository.findById(cuentaInDto.getClienteId())
+        Cliente cliente = clienteRepository.findById(String.valueOf(cuentaInDto.getClienteId()))
                 .orElseThrow(() -> new RecursoNoEncontradoException("Cliente no encontrado con ID: " + cuentaInDto.getClienteId()));
 
         Cuenta cuenta = CuentaMapper.toEntity(cuentaInDto, cliente);
@@ -70,11 +70,11 @@ public class CuentaImplService implements CuentaService {
         cuentaExistente.setNumeroCuenta(cuentaInDto.getNumeroCuenta());
         cuentaExistente.setSaldo(cuentaInDto.getSaldo());
 
-        if (cuentaInDto.getClienteId() != null) {
-            Cliente cliente = clienteRepository.findById(cuentaInDto.getClienteId())
-                    .orElseThrow(() -> new RecursoNoEncontradoException("Cliente no encontrado con ID: " + cuentaInDto.getClienteId()));
-            cuentaExistente.setCliente(cliente);
-        }
+//        if (cuentaInDto.getClienteId() != null) {
+//            Cliente cliente = clienteRepository.findById(String.valueOf(cuentaInDto.getClienteId()))
+//                    .orElseThrow(() -> new RecursoNoEncontradoException("Cliente no encontrado con ID: " + cuentaInDto.getClienteId()));
+//            cuentaExistente.setCliente(cliente);
+//        }
 
         Cuenta cuentaActualizada = cuentaRepository.save(cuentaExistente);
 

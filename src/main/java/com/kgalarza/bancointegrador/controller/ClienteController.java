@@ -36,19 +36,19 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteOutDto> obtenerClientePorId(@PathVariable Long id) {
+    public ResponseEntity<ClienteOutDto> obtenerClientePorId(@PathVariable String id) {
         ClienteOutDto cliente = clienteService.obtenerPorId(id);
         return ResponseEntity.ok(cliente);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteOutDto> actualizarCliente(@PathVariable Long id, @Valid @RequestBody ClienteInDto clienteInDto) {
+    public ResponseEntity<ClienteOutDto> actualizarCliente(@PathVariable String id, @Valid @RequestBody ClienteInDto clienteInDto) {
         ClienteOutDto clienteActualizado = clienteService.actualizarCliente(id, clienteInDto);
         return ResponseEntity.ok(clienteActualizado);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarCliente(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminarCliente(@PathVariable String id) {
         clienteService.eliminarCliente(id);
         return ResponseEntity.noContent().build();
     }

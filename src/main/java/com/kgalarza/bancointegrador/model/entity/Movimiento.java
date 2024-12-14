@@ -1,29 +1,25 @@
 package com.kgalarza.bancointegrador.model.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document(collection = "movimientos")
 public class Movimiento {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
+    @Id
+    private Long id;
     private String descripcion;
     private Double monto;
     private String tipoMovimiento;
-
-    @ManyToOne
-    @JoinColumn(name = "cuenta_id", nullable = false)
-    private Cuenta cuenta;
-
     private String fecha;
+    private String cuentaId;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -51,12 +47,16 @@ public class Movimiento {
         this.tipoMovimiento = tipoMovimiento;
     }
 
-    public Cuenta getCuenta() {
-        return cuenta;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
+    public String getCuentaId() {
+        return cuentaId;
+    }
+
+    public void setCuentaId(String cuentaId) {
+        this.cuentaId = cuentaId;
     }
 
     public String getFecha() {

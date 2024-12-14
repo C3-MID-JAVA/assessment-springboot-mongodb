@@ -1,50 +1,38 @@
 package com.kgalarza.bancointegrador.model.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
+@Document(collection = "clientes")
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(unique = true, nullable = false)
+    private String id;
     private String identificacion;
-
     private String nombre;
-
     private String apellido;
-
-    @Column(unique = true, nullable = false)
     private String email;
-
-    @Column(nullable = false)
     private String telefono;
-
     private String direccion;
-
-    @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cuenta> cuentas;
+    //Se cambió a una lista de strings
+    private List<String> cuentasIds;
 
     public Cliente() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
-
     public String getIdentificacion() {
         return identificacion;
     }
@@ -101,11 +89,11 @@ public class Cliente {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public List<Cuenta> getCuentas() {
-        return cuentas;
+    public List<String> getCuentasIds() {
+        return cuentasIds;
     }
 
-    public void setCuentas(List<Cuenta> cuentas) {
-        this.cuentas = cuentas;
+    public void setCuentasIds(List<String> cuentasIds) {
+        this.cuentasIds = cuentasIds;
     }
 }
