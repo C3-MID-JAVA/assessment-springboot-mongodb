@@ -7,6 +7,16 @@ public class CardInDto {
     private String fechaExpiracion;
     private String cuentaId;
 
+    public CardInDto() {
+    }
+
+    public CardInDto(String numeroTarjeta, String tipo, String fechaExpiracion, String cuentaId) {
+        this.numeroTarjeta = numeroTarjeta;
+        this.tipo = tipo;
+        this.fechaExpiracion = fechaExpiracion;
+        this.cuentaId = cuentaId;
+    }
+
     public String getNumeroTarjeta() {
         return numeroTarjeta;
     }

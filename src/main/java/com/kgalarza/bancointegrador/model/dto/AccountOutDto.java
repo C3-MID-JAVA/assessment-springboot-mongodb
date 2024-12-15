@@ -1,15 +1,22 @@
 package com.kgalarza.bancointegrador.model.dto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class AccountOutDto {
 
     private String id;
     private String numeroCuenta;
-    private Double saldo;
-    private Long clienteId;
-    private List<Long> movimientosIds;
-    private Long tarjetaId;
+    private BigDecimal saldo;
+
+    public AccountOutDto() {
+    }
+
+    public AccountOutDto(String id, String numeroCuenta, BigDecimal saldo) {
+        this.id = id;
+        this.numeroCuenta = numeroCuenta;
+        this.saldo = saldo;
+    }
 
     public String getId() {
         return id;
@@ -27,35 +34,12 @@ public class AccountOutDto {
         this.numeroCuenta = numeroCuenta;
     }
 
-    public Double getSaldo() {
+    public BigDecimal  getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(Double saldo) {
+    public void setSaldo(BigDecimal  saldo) {
         this.saldo = saldo;
     }
 
-    public Long getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(Long clienteId) {
-        this.clienteId = clienteId;
-    }
-
-    public List<Long> getMovimientosIds() {
-        return movimientosIds;
-    }
-
-    public void setMovimientosIds(List<Long> movimientosIds) {
-        this.movimientosIds = movimientosIds;
-    }
-
-    public Long getTarjetaId() {
-        return tarjetaId;
-    }
-
-    public void setTarjetaId(Long tarjetaId) {
-        this.tarjetaId = tarjetaId;
-    }
 }

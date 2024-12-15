@@ -3,7 +3,7 @@ package com.kgalarza.bancointegrador.model.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "tarjetas")
+@Document(collection = "cards")
 public class Card {
 
     @Id

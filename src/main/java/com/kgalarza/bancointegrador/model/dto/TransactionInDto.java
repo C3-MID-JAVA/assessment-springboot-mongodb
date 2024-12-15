@@ -12,15 +12,17 @@ public class TransactionInDto {
     @DecimalMin(value = "0.01", inclusive = true, message = "El monto debe ser mayor a 0")
     private Double monto;
 
-    @NotNull(message = "El tipo de movimiento no puede ser nulo")
-    private String tipoMovimiento;
-
     @NotNull(message = "El ID de cuenta no puede ser nulo")
     private String cuentaId;
 
-    @NotNull(message = "La fecha no puede ser nula")
-    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "La fecha debe estar en el formato 'yyyy-MM-dd'")
-    private String fecha;
+    public TransactionInDto() {
+    }
+
+    public TransactionInDto(String descripcion, Double monto, String cuentaId) {
+        this.descripcion = descripcion;
+        this.monto = monto;
+        this.cuentaId = cuentaId;
+    }
 
     public String getDescripcion() {
         return descripcion;
@@ -38,14 +40,6 @@ public class TransactionInDto {
         this.monto = monto;
     }
 
-    public String getTipoMovimiento() {
-        return tipoMovimiento;
-    }
-
-    public void setTipoMovimiento(String tipoMovimiento) {
-        this.tipoMovimiento = tipoMovimiento;
-    }
-
     public String getCuentaId() {
         return cuentaId;
     }
@@ -54,11 +48,4 @@ public class TransactionInDto {
         this.cuentaId = cuentaId;
     }
 
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
 }

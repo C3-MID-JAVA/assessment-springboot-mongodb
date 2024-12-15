@@ -21,18 +21,6 @@ public class AccountMapper {
         dto.setId(cuenta.getId());
         dto.setNumeroCuenta(cuenta.getNumeroCuenta());
         dto.setSaldo(cuenta.getSaldo());
-//        dto.setClienteId(cuenta.getCliente().getId());
-
-//        if (cuenta.getMovimientos() != null) {
-//            List<Long> movimientosIds = cuenta.getMovimientos().stream()
-//                    .map(Movimiento::getId)
-//                    .collect(Collectors.toList());
-//            dto.setMovimientosIds(movimientosIds);
-//        }
-
-//        if (cuenta.getTarjeta() != null) {
-//            dto.setTarjetaId(cuenta.getTarjeta().getId());
-//        }
 
         return dto;
     }

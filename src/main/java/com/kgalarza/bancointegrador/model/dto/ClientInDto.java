@@ -29,7 +29,19 @@ public class ClientInDto {
     @NotBlank(message = "La dirección no puede estar vacía")
     private String direccion;
 
-    //@Past(message = "La fecha de nacimiento debe ser una fecha pasada")
+    public ClientInDto() {
+    }
+
+    public ClientInDto(String identificacion, String nombre, String apellido, String email, String telefono, String direccion, LocalDate fechaNacimiento) {
+        this.identificacion = identificacion;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
     private LocalDate fechaNacimiento;
 
     public String getIdentificacion() {

@@ -8,7 +8,7 @@ import com.kgalarza.bancointegrador.model.entity.Client;
 import com.kgalarza.bancointegrador.model.entity.Account;
 import com.kgalarza.bancointegrador.repository.ClientRepository;
 import com.kgalarza.bancointegrador.repository.AccountRepository;
-import com.kgalarza.bancointegrador.service.CuentaService;
+import com.kgalarza.bancointegrador.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +16,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CuentaImplService implements CuentaService {
+public class AccountImplService implements AccountService {
 
     private final AccountRepository cuentaRepository;
     private final ClientRepository clienteRepository;
 
     @Autowired
-    public CuentaImplService(AccountRepository cuentaRepository, ClientRepository clienteRepository) {
+    public AccountImplService(AccountRepository cuentaRepository, ClientRepository clienteRepository) {
         this.cuentaRepository = cuentaRepository;
         this.clienteRepository = clienteRepository;
     }
 
     @Override
-    public AccountOutDto crearCuenta(AccountInDto cuentaInDto) {
+    public AccountOutDto createAccount(AccountInDto cuentaInDto) {
         Client cliente = clienteRepository.findById(String.valueOf(cuentaInDto.getClienteId()))
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado con ID: " + cuentaInDto.getClienteId()));
 
@@ -41,7 +41,7 @@ public class CuentaImplService implements CuentaService {
 
 
     @Override
-    public List<AccountOutDto> obtenerTodasLasCuentas() {
+    public List<AccountOutDto> getAllAccounts() {
         List<AccountOutDto> cuentas = cuentaRepository.findAll().stream()
                 .map(AccountMapper::toDto)
                 .collect(Collectors.toList());
@@ -53,37 +53,27 @@ public class CuentaImplService implements CuentaService {
         return cuentas;
     }
     @Override
-    public AccountOutDto obtenerCuentaPorId(String id) {
+    public AccountOutDto getAccountById(String id) {
         Account cuenta = cuentaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada con ID: " + id));
-
         return AccountMapper.toDto(cuenta);
     }
 
     @Override
-    public AccountOutDto actualizarCuenta(String id, AccountInDto cuentaInDto) {
+    public AccountOutDto updateAccount(String id, AccountInDto cuentaInDto) {
         Account cuentaExistente = cuentaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada con ID: " + id));
 
         cuentaExistente.setNumeroCuenta(cuentaInDto.getNumeroCuenta());
         cuentaExistente.setSaldo(cuentaInDto.getSaldo());
 
-//        if (cuentaInDto.getClienteId() != null) {
-//            Cliente cliente = clienteRepository.findById(String.valueOf(cuentaInDto.getClienteId()))
-//                    .orElseThrow(() -> new RecursoNoEncontradoException("Cliente no encontrado con ID: " + cuentaInDto.getClienteId()));
-//            cuentaExistente.setCliente(cliente);
-//        }
-
-        Account cuentaActualizada = cuentaRepository.save(cuentaExistente);
-
-        return AccountMapper.toDto(cuentaActualizada);
+        return AccountMapper.toDto(cuentaRepository.save(cuentaExistente));
     }
 
     @Override
-    public void eliminarCuenta(String id) {
+    public void deleteAccount(String id) {
         Account cuenta = cuentaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada con ID: " + id));
-
         cuentaRepository.delete(cuenta);
     }
 }

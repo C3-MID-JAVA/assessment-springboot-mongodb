@@ -13,8 +13,20 @@ public class ClientOutDto {
     private String telefono;
     private String direccion;
     private LocalDate fechaNacimiento;
-    private List<String> cuentasIds; // IDs de las cuentas asociadas
 
+    public ClientOutDto() {
+    }
+
+    public ClientOutDto(String id, String identificacion, String nombre, String apellido, String email, String telefono, String direccion, LocalDate fechaNacimiento) {
+        this.id = id;
+        this.identificacion = identificacion;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.fechaNacimiento = fechaNacimiento;
+    }
 
     public String getId() {
         return id;
@@ -22,14 +34,6 @@ public class ClientOutDto {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public List<String> getCuentasIds() {
-        return cuentasIds;
-    }
-
-    public void setCuentasIds(List<String> cuentasIds) {
-        this.cuentasIds = cuentasIds;
     }
 
     public String getIdentificacion() {

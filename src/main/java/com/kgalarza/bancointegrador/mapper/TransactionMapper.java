@@ -12,7 +12,6 @@ public class TransactionMapper {
         dto.setMonto(movimiento.getMonto());
         dto.setTipoMovimiento(movimiento.getTipoMovimiento());
         dto.setFecha(movimiento.getFecha());
-//        dto.setCuentaId(movimiento.getCuenta().getId());
         return dto;
     }
 }

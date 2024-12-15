@@ -1,6 +1,6 @@
 package com.kgalarza.bancointegrador.util;
 
-public enum CostosTransaccion {
+public enum TransactionCost {
     DEPOSITO_SUCURSAL(0.0),
     DEPOSITO_CAJERO(2.0),
     DEPOSITO_OTRA_CUENTA(1.5),
@@ -10,7 +10,7 @@ public enum CostosTransaccion {
 
     private final double costo;
 
-    CostosTransaccion(double costo) {
+    TransactionCost(double costo) {
         this.costo = costo;
     }
 

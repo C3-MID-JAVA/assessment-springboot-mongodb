@@ -2,7 +2,7 @@ package com.kgalarza.bancointegrador.controller;
 
 import com.kgalarza.bancointegrador.model.dto.CardInDto;
 import com.kgalarza.bancointegrador.model.dto.CardOutDto;
-import com.kgalarza.bancointegrador.service.TarjetaService;
+import com.kgalarza.bancointegrador.service.CardService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import java.util.List;
 @RequestMapping("/v1/api/tarjetas")
 public class CardController {
 
-    private final TarjetaService tarjetaService;
+    private final CardService tarjetaService;
 
     @Autowired
-    public CardController(TarjetaService tarjetaService) {
+    public CardController(CardService tarjetaService) {
         this.tarjetaService = tarjetaService;
     }
 

@@ -5,8 +5,17 @@ public class CardOutDto {
     private String id;
     private String numeroTarjeta;
     private String tipo;
-    private String fechaExpiracion;
     private String cuentaId;
+
+    public CardOutDto() {
+    }
+
+    public CardOutDto(String id, String cuentaId, String tipo, String numeroTarjeta) {
+        this.id = id;
+        this.cuentaId = cuentaId;
+        this.tipo = tipo;
+        this.numeroTarjeta = numeroTarjeta;
+    }
 
     public String getId() {
         return id;
@@ -34,14 +43,6 @@ public class CardOutDto {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    public String getFechaExpiracion() {
-        return fechaExpiracion;
-    }
-
-    public void setFechaExpiracion(String fechaExpiracion) {
-        this.fechaExpiracion = fechaExpiracion;
     }
 
     public String getCuentaId() {

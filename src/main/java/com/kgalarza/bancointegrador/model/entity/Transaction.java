@@ -3,15 +3,18 @@ package com.kgalarza.bancointegrador.model.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "movimientos")
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Document(collection = "transactions")
 public class Transaction {
 
     @Id
     private String id;
     private String descripcion;
-    private Double monto;
+    private BigDecimal monto;
     private String tipoMovimiento;
-    private String fecha;
+    private LocalDate fecha;
     private String cuentaId;
 
     public String getId() {
@@ -30,11 +33,11 @@ public class Transaction {
         this.descripcion = descripcion;
     }
 
-    public Double getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
 
-    public void setMonto(Double monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 
@@ -55,11 +58,11 @@ public class Transaction {
         this.cuentaId = cuentaId;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 }

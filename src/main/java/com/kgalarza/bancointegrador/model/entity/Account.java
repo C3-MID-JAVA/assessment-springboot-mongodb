@@ -4,15 +4,16 @@ package com.kgalarza.bancointegrador.model.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-@Document(collection = "cuentas")
+@Document(collection = "accounts")
 public class Account {
 
     @Id
     private String id;
     private String numeroCuenta;
-    private Double saldo;
+    private BigDecimal saldo;
 
     private String clienteId;
     private String tarjetaId;
@@ -50,11 +51,11 @@ public class Account {
         this.movimientosIds = movimientosIds;
     }
 
-    public Double getSaldo() {
+    public BigDecimal  getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(Double saldo) {
+    public void setSaldo(BigDecimal  saldo) {
         this.saldo = saldo;
     }
 

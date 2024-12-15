@@ -8,7 +8,7 @@ import com.kgalarza.bancointegrador.model.entity.Account;
 import com.kgalarza.bancointegrador.model.entity.Card;
 import com.kgalarza.bancointegrador.repository.AccountRepository;
 import com.kgalarza.bancointegrador.repository.CardRepository;
-import com.kgalarza.bancointegrador.service.TarjetaService;
+import com.kgalarza.bancointegrador.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +16,16 @@ import java.util.stream.Collectors;
 import java.util.List;
 
 @Service
-public class TarjetaImplService implements TarjetaService {
+public class CardImplService implements CardService {
 
     private final CardRepository tarjetaRepository;
     private final AccountRepository cuentaRepository;
 
 
     @Autowired
-    public TarjetaImplService(CardRepository tarjetaRepository,
-                              AccountRepository cuentaRepository,
-                              CardMapper tarjetaMapper) {
+    public CardImplService(CardRepository tarjetaRepository,
+                           AccountRepository cuentaRepository,
+                           CardMapper tarjetaMapper) {
         this.tarjetaRepository = tarjetaRepository;
         this.cuentaRepository = cuentaRepository;
     }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface TarjetaService {
+public interface CardService {
 
     CardOutDto crearTarjeta(CardInDto tarjetaInDto);
 

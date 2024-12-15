@@ -6,24 +6,36 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.List;
 
-@Document(collection = "clientes")
+@Document(collection = "clients")
 public class Client {
 
     @Id
     private String id;
-    private String identificacion;
-    private String nombre;
-    private String apellido;
+    private String identification;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String telefono;
-    private String direccion;
-    private LocalDate fechaNacimiento;
+    private String phone;
+    private String address;
+    private LocalDate birthDate;
 
 
-    private List<String> cuentasIds;
+    private List<String> accountIds;
 
     public Client() {
     }
+
+    public Client(String id, String identification, String firstName, String lastName, String email, String phone, String address, LocalDate birthDate) {
+        this.id = id;
+        this.identification = identification;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.birthDate = birthDate;
+    }
+
 
     public String getId() {
         return id;
@@ -32,28 +44,29 @@ public class Client {
     public void setId(String id) {
         this.id = id;
     }
-    public String getIdentificacion() {
-        return identificacion;
+
+    public String getIdentification() {
+        return identification;
     }
 
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
+    public void setIdentification(String identification) {
+        this.identification = identification;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -64,35 +77,35 @@ public class Client {
         this.email = email;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public List<String> getCuentasIds() {
-        return cuentasIds;
+    public List<String> getAccountIds() {
+        return accountIds;
     }
 
-    public void setCuentasIds(List<String> cuentasIds) {
-        this.cuentasIds = cuentasIds;
+    public void setAccountIds(List<String> accountIds) {
+        this.accountIds = accountIds;
     }
 }
