@@ -2,6 +2,7 @@ package co.com.sofka.cuentabancaria.controller;
 
 import co.com.sofka.cuentabancaria.dto.cuenta.CuentaRequestDTO;
 import co.com.sofka.cuentabancaria.dto.cuenta.CuentaResponseDTO;
+import co.com.sofka.cuentabancaria.dto.util.PeticionByIdDTO;
 import co.com.sofka.cuentabancaria.service.iservice.CuentaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,9 +78,10 @@ public class CuentaControllerTest {
     @Test
     void testConsultarSaldoCuentaInexistente() {
         when(cuentaService.consultarSaldo("999")).thenThrow(new RuntimeException("Cuenta no encontrada"));
+        PeticionByIdDTO peticion = new PeticionByIdDTO("999");
 
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            cuentaController.consultarSaldo("999");
+            cuentaController.consultarSaldo(peticion);
         });
 
         assertEquals("Cuenta no encontrada", exception.getMessage());
@@ -89,10 +91,11 @@ public class CuentaControllerTest {
     @Test
     void testObtenerCuentaPorId() {
         CuentaResponseDTO cuentaMock = new CuentaResponseDTO("1", "1234567890", BigDecimal.valueOf(1000), "Cristhian");
+        PeticionByIdDTO peticion = new PeticionByIdDTO("1");
 
         when(cuentaService.obtenerCuentaPorId("1")).thenReturn(cuentaMock);
 
-        ResponseEntity<CuentaResponseDTO> response = cuentaController.obtenerCuentaPorId("1");
+        ResponseEntity<CuentaResponseDTO> response = cuentaController.obtenerCuentaPorId(peticion);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
@@ -103,10 +106,11 @@ public class CuentaControllerTest {
     @Test
     void testConsultarSaldo() {
         BigDecimal saldoMock = BigDecimal.valueOf(1500);
+        PeticionByIdDTO peticion = new PeticionByIdDTO("1");
 
         when(cuentaService.consultarSaldo("1")).thenReturn(saldoMock);
 
-        ResponseEntity<BigDecimal> response = cuentaController.consultarSaldo("1");
+        ResponseEntity<BigDecimal> response = cuentaController.consultarSaldo(peticion);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
@@ -117,9 +121,10 @@ public class CuentaControllerTest {
     @Test
     void testObtenerCuentaPorIdInvalido() {
         when(cuentaService.obtenerCuentaPorId("invalid_id")).thenThrow(new IllegalArgumentException("ID inválido"));
+        PeticionByIdDTO peticion = new PeticionByIdDTO("invalid_id");
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            cuentaController.obtenerCuentaPorId("invalid_id");
+            cuentaController.obtenerCuentaPorId(peticion);
         });
 
         assertEquals("ID inválido", exception.getMessage());

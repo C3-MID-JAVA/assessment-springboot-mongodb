@@ -2,6 +2,7 @@ package co.com.sofka.cuentabancaria.controller;
 
 import co.com.sofka.cuentabancaria.dto.cuenta.CuentaRequestDTO;
 import co.com.sofka.cuentabancaria.dto.cuenta.CuentaResponseDTO;
+import co.com.sofka.cuentabancaria.dto.util.PeticionByIdDTO;
 import co.com.sofka.cuentabancaria.service.iservice.CuentaService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -36,16 +37,18 @@ public class CuentaController {
         return ResponseEntity.status(HttpStatus.OK).body(cuentaResponseDTO);
     }
 
-    @GetMapping("/listar/{id}")
-    public ResponseEntity<CuentaResponseDTO> obtenerCuentaPorId(@PathVariable("id") String id) {
-        CuentaResponseDTO cuenta = cuentaService.obtenerCuentaPorId(id);
+    @PostMapping("/listarById")
+    public ResponseEntity<CuentaResponseDTO> obtenerCuentaPorId(@RequestBody PeticionByIdDTO cuentaRequestDTO) {
+        CuentaResponseDTO cuenta = cuentaService.obtenerCuentaPorId(cuentaRequestDTO.getCuentaId());
         return ResponseEntity.status(HttpStatus.OK).body(cuenta);
     }
 
-    @GetMapping("/listar/{id}/saldo")
-    public ResponseEntity<BigDecimal> consultarSaldo(@PathVariable String id) {
-        BigDecimal cuenta = cuentaService.consultarSaldo(id);
-        return ResponseEntity.status(HttpStatus.OK).body(cuenta);
+
+    @PostMapping("/listar/saldoById")
+    public ResponseEntity<BigDecimal> consultarSaldo(@RequestBody PeticionByIdDTO cuentaRequestDTO) {
+        BigDecimal saldo = cuentaService.consultarSaldo(cuentaRequestDTO.getCuentaId());
+        return ResponseEntity.status(HttpStatus.OK).body(saldo);
     }
+
 
 }
