@@ -3,6 +3,7 @@ package co.com.sofka.cuentabancaria.controller;
 
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionRequestDTO;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionResponseDTO;
+import co.com.sofka.cuentabancaria.dto.util.PeticionByIdDTO;
 import co.com.sofka.cuentabancaria.service.iservice.TransaccionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -40,9 +41,10 @@ public class TransaccionController {
         return ResponseEntity.ok(transaccion);
     }
 
-    @GetMapping("/cuenta/{cuentaId}")
-    public ResponseEntity<List<TransaccionResponseDTO>> obtenerHistorialPorCuenta(@PathVariable String cuentaId) {
-        List<TransaccionResponseDTO> transaccionResponseDTO = transaccionService.obtenerHistorialPorCuenta(cuentaId);
+    @PostMapping("/cuenta/historialById")
+    public ResponseEntity<List<TransaccionResponseDTO>> obtenerHistorialPorCuenta(@RequestBody PeticionByIdDTO cuentaRequestDTO) {
+        List<TransaccionResponseDTO> transaccionResponseDTO = transaccionService.obtenerHistorialPorCuenta(cuentaRequestDTO.getCuentaId());
         return ResponseEntity.ok(transaccionResponseDTO);
     }
+
 }

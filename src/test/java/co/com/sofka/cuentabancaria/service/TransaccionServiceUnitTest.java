@@ -8,7 +8,6 @@ import static org.mockito.Mockito.*;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionRequestDTO;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionResponseDTO;
 import co.com.sofka.cuentabancaria.model.Cuenta;
-import co.com.sofka.cuentabancaria.model.enums.TipoTransaccion;
 import co.com.sofka.cuentabancaria.repository.CuentaRepository;
 import co.com.sofka.cuentabancaria.repository.TransaccionRepository;
 import co.com.sofka.cuentabancaria.service.strategy.TransaccionStrategy;
@@ -19,13 +18,12 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-public class TransaccionServiceImplTest {
+public class TransaccionServiceUnitTest {
 
     private TransaccionServiceImpl transaccionService;
     private TransaccionRepository transaccionRepository;
     private CuentaRepository cuentaRepository;
     private TransaccionStrategyFactory strategyFactory;
-    private TipoTransaccion tipoTransaccion;
     @BeforeEach
     void setUp() {
         transaccionRepository = mock(TransaccionRepository.class);
@@ -39,7 +37,7 @@ public class TransaccionServiceImplTest {
         TransaccionRequestDTO depositoRequestDTO = new TransaccionRequestDTO("12345", BigDecimal.valueOf(1000), DEPOSITO_CAJERO);
 
         Cuenta cuenta = new Cuenta("12345", BigDecimal.valueOf(2000), "Juan Perez");
-        when(cuentaRepository.findById("12345")).thenReturn(Optional.of(cuenta));
+        when(cuentaRepository.findByNumeroCuenta("12345")).thenReturn(Optional.of(cuenta));
 
         TransaccionStrategy strategy = mock(TransaccionStrategy.class);
         when(strategy.getCosto()).thenReturn(BigDecimal.valueOf(10));
@@ -52,10 +50,10 @@ public class TransaccionServiceImplTest {
 
     @Test
     void testRealizarRetiro_Exitoso() {
-        TransaccionRequestDTO retiroRequestDTO = new TransaccionRequestDTO("12345", BigDecimal.valueOf(1000),RETIRO_CAJERO);
+        TransaccionRequestDTO retiroRequestDTO = new TransaccionRequestDTO("9876543210", BigDecimal.valueOf(1000),RETIRO_CAJERO);
 
-        Cuenta cuenta = new Cuenta("12345", BigDecimal.valueOf(5000), "Juan Perez");
-        when(cuentaRepository.findById("12345")).thenReturn(Optional.of(cuenta));
+        Cuenta cuenta = new Cuenta("9876543210", BigDecimal.valueOf(5000), "Juan Perez");
+        when(cuentaRepository.findByNumeroCuenta(cuenta.getNumeroCuenta())).thenReturn(Optional.of(cuenta));
 
         TransaccionStrategy strategy = mock(TransaccionStrategy.class);
         when(strategy.getCosto()).thenReturn(BigDecimal.valueOf(100));

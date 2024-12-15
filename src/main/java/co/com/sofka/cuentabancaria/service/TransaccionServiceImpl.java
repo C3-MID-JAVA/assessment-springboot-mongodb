@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,8 +45,8 @@ public class TransaccionServiceImpl implements TransaccionService {
 
 
     private TransaccionStrategyContext obtenerCuentaYStrategy(TransaccionRequestDTO requestDTO, TipoOperacion tipo) {
-        Cuenta cuenta = cuentaRepository.findById(requestDTO.getCuentaId()).orElseThrow(
-                () -> new NoSuchElementException("Cuenta no encontrada con el ID: " + requestDTO.getCuentaId())
+        Cuenta cuenta = cuentaRepository.findByNumeroCuenta(requestDTO.getNumeroCuenta()).orElseThrow(
+                () -> new NoSuchElementException("Cuenta no encontrada con el numero de Cuenta: " + requestDTO.getNumeroCuenta())
         );
 
         TransaccionStrategy strategy = strategyFactory.getStrategy(requestDTO.getTipoTransaccion(),tipo);
@@ -79,7 +80,7 @@ public class TransaccionServiceImpl implements TransaccionService {
 
         transaccionRepository.save(transaccion);
 
-        return new TransaccionResponseDTO(transaccion, cuenta.getSaldo());
+        return new TransaccionResponseDTO(transaccion, cuenta.getSaldo(), cuenta.getNumeroCuenta());
     }
 
 
@@ -105,7 +106,7 @@ public class TransaccionServiceImpl implements TransaccionService {
 
         transaccionRepository.save(transaccion);
 
-        return new TransaccionResponseDTO(transaccion, cuenta.getSaldo());
+        return new TransaccionResponseDTO(transaccion, cuenta.getSaldo(),cuenta.getNumeroCuenta());
     }
 
 
@@ -120,11 +121,19 @@ public class TransaccionServiceImpl implements TransaccionService {
 
 
     private TransaccionResponseDTO mapearTransaccionAResponseDTO(Transaccion transaccion) {
-        Cuenta cuenta = cuentaRepository.findById(transaccion.getCuentaId()).orElseThrow(
-                () -> new NoSuchElementException("Cuenta no encontrada con el ID: " + transaccion.getCuentaId())
-        );
+        Optional<Cuenta> cuentaOptional = cuentaRepository.findById(transaccion.getCuentaId());
 
-        return new TransaccionResponseDTO(transaccion, cuenta.getSaldo());
+        if (cuentaOptional.isEmpty()) {
+            return new TransaccionResponseDTO(
+                    transaccion,
+                    BigDecimal.ZERO,
+                    "Cuenta desconocida"
+            );
+        }
+
+        Cuenta cuenta = cuentaOptional.get();
+        return new TransaccionResponseDTO(transaccion, cuenta.getSaldo(), cuenta.getNumeroCuenta());
     }
+
 
 }

@@ -95,6 +95,4 @@ public class CuentaServiceUnitTest {
         assertEquals("123456", cuentaResponseDTO.getNumeroCuenta());
     }
 
-
-
 }

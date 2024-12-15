@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 public class TransaccionRequestDTO {
 
     @NotNull
-    private String cuentaId;
+    private String numeroCuenta;
 
     @NotNull
     @Positive(message = "El monto debe ser mayor a cero")

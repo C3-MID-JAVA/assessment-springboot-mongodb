@@ -2,6 +2,7 @@ package co.com.sofka.cuentabancaria.controller;
 
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionRequestDTO;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionResponseDTO;
+import co.com.sofka.cuentabancaria.dto.util.PeticionByIdDTO;
 import co.com.sofka.cuentabancaria.service.iservice.TransaccionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,16 +39,13 @@ class TransaccionControllerTest {
 
     @Test
     void realizarDeposito_Exito() {
-        // Datos de prueba
         TransaccionRequestDTO request = new TransaccionRequestDTO();
         TransaccionResponseDTO response = new TransaccionResponseDTO();
 
         when(transaccionService.realizarDeposito(request)).thenReturn(response);
 
-        // Ejecución
         ResponseEntity<TransaccionResponseDTO> resultado = transaccionController.realizarDeposito(request);
 
-        // Validaciones
         assertEquals(HttpStatus.CREATED, resultado.getStatusCode());
         assertEquals(response, resultado.getBody());
         verify(transaccionService, times(1)).realizarDeposito(request);
@@ -67,15 +65,12 @@ class TransaccionControllerTest {
 
     @Test
     void listarTransacciones_Exito() {
-        // Datos de prueba
         List<TransaccionResponseDTO> response = Arrays.asList(new TransaccionResponseDTO(), new TransaccionResponseDTO());
 
         when(transaccionService.obtenerTransacciones()).thenReturn(response);
 
-        // Ejecución
         ResponseEntity<List<TransaccionResponseDTO>> resultado = transaccionController.listarTransacciones();
 
-        // Validaciones
         assertEquals(HttpStatus.OK, resultado.getStatusCode());
         assertEquals(2, resultado.getBody().size());
         verify(transaccionService, times(1)).obtenerTransacciones();
@@ -83,16 +78,13 @@ class TransaccionControllerTest {
 
     @Test
     void realizarRetiro_Exito() {
-        // Datos de prueba
         TransaccionRequestDTO request = new TransaccionRequestDTO();
         TransaccionResponseDTO response = new TransaccionResponseDTO();
 
         when(transaccionService.realizarRetiro(request)).thenReturn(response);
 
-        // Ejecución
         ResponseEntity<TransaccionResponseDTO> resultado = transaccionController.realizarRetiro(request);
 
-        // Validaciones
         assertEquals(HttpStatus.OK, resultado.getStatusCode());
         assertEquals(response, resultado.getBody());
         verify(transaccionService, times(1)).realizarRetiro(request);
@@ -101,7 +93,7 @@ class TransaccionControllerTest {
     @Test
     void realizarRetiro_Fallo_Validacion() throws Exception {
         TransaccionRequestDTO request = new TransaccionRequestDTO();
-        request.setCuentaId(null);
+        request.setNumeroCuenta(null);
         request.setMonto(null);
         request.setTipoTransaccion(null);
 
@@ -120,33 +112,28 @@ class TransaccionControllerTest {
 
     @Test
     void obtenerHistorialPorCuenta_Exito() {
-        // Datos de prueba
-        String cuentaId = "12345";
+        PeticionByIdDTO peticion = new PeticionByIdDTO("12345");
         List<TransaccionResponseDTO> response = Arrays.asList(new TransaccionResponseDTO(), new TransaccionResponseDTO());
 
-        when(transaccionService.obtenerHistorialPorCuenta(cuentaId)).thenReturn(response);
+        when(transaccionService.obtenerHistorialPorCuenta(peticion.getCuentaId())).thenReturn(response);
 
-        // Ejecución
-        ResponseEntity<List<TransaccionResponseDTO>> resultado = transaccionController.obtenerHistorialPorCuenta(cuentaId);
+        ResponseEntity<List<TransaccionResponseDTO>> resultado = transaccionController.obtenerHistorialPorCuenta(peticion);
 
-        // Validaciones
         assertEquals(HttpStatus.OK, resultado.getStatusCode());
         assertEquals(2, resultado.getBody().size());
-        verify(transaccionService, times(1)).obtenerHistorialPorCuenta(cuentaId);
+        verify(transaccionService, times(1)).obtenerHistorialPorCuenta(peticion.getCuentaId());
     }
 
     @Test
     void obtenerHistorialPorCuenta_CuentaNoExiste() {
-        // Datos de prueba
-        String cuentaId = "cuenta_invalida";
-        when(transaccionService.obtenerHistorialPorCuenta(cuentaId)).thenReturn(List.of());
+        PeticionByIdDTO peticion = new PeticionByIdDTO("cuenta_invalida");
 
-        // Ejecución
-        ResponseEntity<List<TransaccionResponseDTO>> resultado = transaccionController.obtenerHistorialPorCuenta(cuentaId);
+        when(transaccionService.obtenerHistorialPorCuenta(peticion.getCuentaId())).thenReturn(List.of());
 
-        // Validaciones
+        ResponseEntity<List<TransaccionResponseDTO>> resultado = transaccionController.obtenerHistorialPorCuenta(peticion);
+
         assertEquals(HttpStatus.OK, resultado.getStatusCode());
         assertTrue(resultado.getBody().isEmpty());
-        verify(transaccionService, times(1)).obtenerHistorialPorCuenta(cuentaId);
+        verify(transaccionService, times(1)).obtenerHistorialPorCuenta(peticion.getCuentaId());
     }
 }

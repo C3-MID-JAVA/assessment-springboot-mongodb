@@ -20,7 +20,7 @@ public class TransaccionResponseDTO {
 
     private String id;
 
-    private String cuentaId;
+    private String numeroCuenta;
 
     private TipoTransaccion tipoTransaccion;
 
@@ -32,23 +32,15 @@ public class TransaccionResponseDTO {
 
     private LocalDateTime fecha;
 
-    public TransaccionResponseDTO(Transaccion transaccion, BigDecimal saldo) {
+    public TransaccionResponseDTO(Transaccion transaccion, BigDecimal saldo, String numeroCuenta) {
         this.id = transaccion.getId();
-        this.cuentaId = transaccion.getCuentaId();
         this.tipoTransaccion = transaccion.getTipo();
         this.monto = transaccion.getMonto();
         this.costoTransaccion = transaccion.getCostoTransaccion();
         this.fecha = transaccion.getFecha();
         this.nuevoSaldo = saldo;
+        this.numeroCuenta = numeroCuenta;
     }
 
-    public TransaccionResponseDTO(Transaccion transaccion) {
-        this.id = transaccion.getId();
-        this.cuentaId = transaccion.getCuentaId();
-        this.tipoTransaccion = transaccion.getTipo();
-        this.monto = transaccion.getMonto();
-        this.costoTransaccion = transaccion.getCostoTransaccion();
-        this.fecha = transaccion.getFecha();
-    }
 
 }
