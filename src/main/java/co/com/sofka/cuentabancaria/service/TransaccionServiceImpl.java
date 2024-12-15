@@ -5,10 +5,13 @@ import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionRequestDTO;
 import co.com.sofka.cuentabancaria.dto.transaccion.TransaccionResponseDTO;
 import co.com.sofka.cuentabancaria.model.Cuenta;
 import co.com.sofka.cuentabancaria.model.Transaccion;
-import co.com.sofka.cuentabancaria.model.enums.TipoTransaccion;
 import co.com.sofka.cuentabancaria.repository.CuentaRepository;
 import co.com.sofka.cuentabancaria.repository.TransaccionRepository;
 import co.com.sofka.cuentabancaria.service.iservice.TransaccionService;
+import co.com.sofka.cuentabancaria.service.strategy.TransaccionStrategy;
+import co.com.sofka.cuentabancaria.service.strategy.TransaccionStrategyContext;
+import co.com.sofka.cuentabancaria.service.strategy.TransaccionStrategyFactory;
+import co.com.sofka.cuentabancaria.service.strategy.enums.TipoOperacion;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -29,21 +32,14 @@ public class TransaccionServiceImpl implements TransaccionService {
 
     private final TransaccionRepository transaccionRepository;
     private final CuentaRepository cuentaRepository;
+    private final TransaccionStrategyFactory strategyFactory;
 
-    public TransaccionServiceImpl(TransaccionRepository transaccionRepository, CuentaRepository cuentaRepository) {
+    public TransaccionServiceImpl(TransaccionRepository transaccionRepository, CuentaRepository cuentaRepository, TransaccionStrategyFactory strategyFactory) {
         this.transaccionRepository = transaccionRepository;
         this.cuentaRepository = cuentaRepository;
-    }
-/*
-    @Override
-    public List<TransaccionResponseDTO> obtenerTransacciones() {
-        List<Transaccion> transacciones = transaccionRepository.findAll();
-        List<TransaccionResponseDTO> transaccionResponse = transacciones.stream().
-                map(t -> new TransaccionResponseDTO(t)).collect(Collectors.toList());
-        return transaccionResponse;
+        this.strategyFactory = strategyFactory;
     }
 
-    */
     @Override
     public List<TransaccionResponseDTO> obtenerTransacciones() {
         List<Transaccion> transacciones = transaccionRepository.findAll();
@@ -54,95 +50,71 @@ public class TransaccionServiceImpl implements TransaccionService {
     }
 
 
+    private TransaccionStrategyContext obtenerCuentaYStrategy(TransaccionRequestDTO requestDTO, TipoOperacion tipo) {
+        Cuenta cuenta = cuentaRepository.findById(requestDTO.getCuentaId()).orElseThrow(
+                () -> new NoSuchElementException("Cuenta no encontrada con el ID: " + requestDTO.getCuentaId())
+        );
+
+        TransaccionStrategy strategy = strategyFactory.getStrategy(requestDTO.getTipoTransaccion(),tipo);
+
+        BigDecimal monto = requestDTO.getMonto();
+        strategy.validar(cuenta, monto);
+
+        return new TransaccionStrategyContext(cuenta, strategy, monto);
+    }
+
 
     @Override
     public TransaccionResponseDTO realizarDeposito(TransaccionRequestDTO depositoRequestDTO) {
-        if (depositoRequestDTO == null) {
-            throw new IllegalArgumentException("El cuerpo de la solicitud no puede ser nulo");
-        }
-
-        Cuenta cuenta = cuentaRepository.findById(depositoRequestDTO.getCuentaId()).orElseThrow(
-                () -> new NoSuchElementException("Cuenta no encontrada  con el ID: " + depositoRequestDTO.getCuentaId())
-        );
-
-        if(depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_CAJERO &&
-           depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_OTRA_CUENTA &&
-           depositoRequestDTO.getTipoTransaccion() != TipoTransaccion.DEPOSITO_SUCURSAL){
-            throw new ConflictException("Tipo de transaccion no valido");
-        }
-
-        BigDecimal monto = depositoRequestDTO.getMonto();
-        BigDecimal costoTransaccion = BigDecimal.ZERO;
-
-        if(depositoRequestDTO.getTipoTransaccion() == TipoTransaccion.DEPOSITO_CAJERO){
-            costoTransaccion = DEPOSITO_CAJERO;
-        } else if (depositoRequestDTO.getTipoTransaccion() == TipoTransaccion.DEPOSITO_OTRA_CUENTA) {
-            costoTransaccion = DEPOSITO_OTRA_CUENTA;
-        } else if (depositoRequestDTO.getTipoTransaccion() == TipoTransaccion.DEPOSITO_SUCURSAL) {
-            costoTransaccion = DEPOSITO_SUCURSAL;
-        }
-
+        TransaccionStrategyContext context = obtenerCuentaYStrategy(depositoRequestDTO, TipoOperacion.DEPOSITO);
+        Cuenta cuenta = context.getCuenta();
+        TransaccionStrategy strategy = context.getStrategy();
+        BigDecimal monto = context.getMonto();
+        BigDecimal costoTransaccion = strategy.getCosto();
         BigDecimal saldoCuenta = cuenta.getSaldo();
         BigDecimal saldoFinal = saldoCuenta.add(monto).subtract(costoTransaccion);
 
-        if(saldoFinal.compareTo(BigDecimal.ZERO)< 0){
+        if (saldoFinal.compareTo(BigDecimal.ZERO) < 0) {
             throw new ConflictException("Saldo insuficiente, tome en cuenta el costo de la transacción");
         }
 
         cuenta.setSaldo(saldoFinal);
         cuentaRepository.save(cuenta);
 
-        Transaccion transaccion = new Transaccion(monto,
-                costoTransaccion,LocalDateTime.now(),
-                depositoRequestDTO.getTipoTransaccion(),cuenta.getId());
+        Transaccion transaccion = new Transaccion(monto, costoTransaccion, LocalDateTime.now(),
+                depositoRequestDTO.getTipoTransaccion(), cuenta.getId());
 
         transaccionRepository.save(transaccion);
 
-        return new TransaccionResponseDTO(transaccion,cuenta.getSaldo());
+        return new TransaccionResponseDTO(transaccion, cuenta.getSaldo());
     }
+
+
 
     @Override
     public TransaccionResponseDTO realizarRetiro(TransaccionRequestDTO transaccionRequestDTO) {
+        TransaccionStrategyContext context = obtenerCuentaYStrategy(transaccionRequestDTO, TipoOperacion.RETIRO);
+        Cuenta cuenta = context.getCuenta();
+        TransaccionStrategy strategy = context.getStrategy();
+        BigDecimal monto = context.getMonto();
+        BigDecimal costoTransaccion = strategy.getCosto();
+        BigDecimal montoConCosto = monto.add(costoTransaccion);
 
-        Cuenta cuenta = cuentaRepository.findById(transaccionRequestDTO.getCuentaId()).orElseThrow(
-                () -> new NoSuchElementException("Cuenta no encontrada  con el ID: " + transaccionRequestDTO.getCuentaId())
-        );
-
-        if(transaccionRequestDTO.getTipoTransaccion() != TipoTransaccion.RETIRO_CAJERO &&
-           transaccionRequestDTO.getTipoTransaccion() != TipoTransaccion.COMPRA_EN_LINEA &&
-           transaccionRequestDTO.getTipoTransaccion() != TipoTransaccion.COMPRA_FISICA){
-            throw new ConflictException("Tipo de transaccion no valido para retiro o compra");
-        }
-        BigDecimal monto = transaccionRequestDTO.getMonto();
-        BigDecimal costoTransaccion = BigDecimal.ZERO;
-
-        if (transaccionRequestDTO.getTipoTransaccion() == TipoTransaccion.RETIRO_CAJERO) {
-            costoTransaccion = RETIRO_CAJERO;
-        } else if (transaccionRequestDTO.getTipoTransaccion() == TipoTransaccion.COMPRA_EN_LINEA) {
-            costoTransaccion = COMPRA_EN_LINEA;
-        } else if (transaccionRequestDTO.getTipoTransaccion() == TipoTransaccion.COMPRA_FISICA) {
-            costoTransaccion = COMPRA_FISICA;
-        }
-
-        BigDecimal saldoCuenta = cuenta.getSaldo();
-        BigDecimal montoConCosto  = monto.add(costoTransaccion);
-
-        if(saldoCuenta.compareTo(montoConCosto) <0){
+        if (cuenta.getSaldo().compareTo(montoConCosto) < 0) {
             throw new ConflictException("Saldo insuficiente");
         }
 
-        cuenta.setSaldo(saldoCuenta.subtract(montoConCosto));
+        cuenta.setSaldo(cuenta.getSaldo().subtract(montoConCosto));
         cuentaRepository.save(cuenta);
 
-
-        Transaccion transaccion = new Transaccion(monto,
-                costoTransaccion,LocalDateTime.now(),
-                transaccionRequestDTO.getTipoTransaccion(),cuenta.getId());
+        Transaccion transaccion = new Transaccion(monto, costoTransaccion, LocalDateTime.now(),
+                transaccionRequestDTO.getTipoTransaccion(), cuenta.getId());
 
         transaccionRepository.save(transaccion);
 
-        return new TransaccionResponseDTO(transaccion,cuenta.getSaldo());
+        return new TransaccionResponseDTO(transaccion, cuenta.getSaldo());
     }
+
 
     @Override
     public List<TransaccionResponseDTO> obtenerHistorialPorCuenta(String cuentaId) {
