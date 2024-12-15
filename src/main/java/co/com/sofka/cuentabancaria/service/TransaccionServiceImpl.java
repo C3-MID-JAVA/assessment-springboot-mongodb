@@ -23,13 +23,6 @@ import java.util.stream.Collectors;
 @Service
 public class TransaccionServiceImpl implements TransaccionService {
 
-    private static final BigDecimal DEPOSITO_SUCURSAL = BigDecimal.ZERO;
-    private static final BigDecimal DEPOSITO_CAJERO= BigDecimal.valueOf(2.0);
-    private static final BigDecimal DEPOSITO_OTRA_CUENTA = BigDecimal.valueOf(1.50);
-    private static final BigDecimal COMPRA_FISICA = BigDecimal.ZERO;
-    private static final BigDecimal COMPRA_EN_LINEA = BigDecimal.valueOf(5.0);
-    private static final BigDecimal RETIRO_CAJERO = BigDecimal.valueOf(1.0);
-
     private final TransaccionRepository transaccionRepository;
     private final CuentaRepository cuentaRepository;
     private final TransaccionStrategyFactory strategyFactory;

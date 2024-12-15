@@ -1,6 +1,7 @@
 package co.com.sofka.cuentabancaria.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +12,7 @@ import java.util.List;
 @Document(collection = "cuentas")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Cuenta {
     @Id
     private String id;
@@ -23,4 +25,15 @@ public class Cuenta {
 
     private List<Transaccion> transacciones= new ArrayList<>();
 
+    public Cuenta(String id, String numeroCuenta, BigDecimal bigDecimal, String juanPerez) {
+        this.numeroCuenta = numeroCuenta;
+        this.saldo = bigDecimal;
+        this.titular = juanPerez;
+        this.id = id;
+    }
+    public Cuenta(String numeroCuenta, BigDecimal bigDecimal, String juanPerez) {
+        this.numeroCuenta = numeroCuenta;
+        this.saldo = bigDecimal;
+        this.titular = juanPerez;
+    }
 }
