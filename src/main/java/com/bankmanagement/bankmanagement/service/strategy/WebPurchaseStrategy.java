@@ -1,5 +1,6 @@
 package com.bankmanagement.bankmanagement.service.strategy;
 
+import com.bankmanagement.bankmanagement.exception.BadRequestException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,7 +15,7 @@ public class WebPurchaseStrategy implements TransactionStrategy {
         double fee = calculateFee();
         double totalCost = amount + fee;
         if (balance < totalCost) {
-            throw new RuntimeException("Insufficient balance for this transaction.");
+            throw new BadRequestException("Insufficient balance for this transaction.");
         }
         return balance - totalCost;
     }

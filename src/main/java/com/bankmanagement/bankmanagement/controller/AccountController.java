@@ -28,7 +28,7 @@ public class AccountController {
     }
 
     @GetMapping("/{userId}/user")
-    public ResponseEntity<List<AccountResponseDTO>> getAllByUserId(@PathVariable UUID userId){
+    public ResponseEntity<List<AccountResponseDTO>> getAllByUserId(@PathVariable String userId){
         List<AccountResponseDTO> accountResponseDTOS = accountService.getAllByUserId(userId);
         return ResponseEntity.ok(accountResponseDTOS);
     }

@@ -13,6 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AccountRequestDTO {
 
-    @NotNull(message = "UserId cannot be blank")
-    private UUID userId;
+    @NotBlank(message = "UserId cannot be blank")
+    private String userId;
 }

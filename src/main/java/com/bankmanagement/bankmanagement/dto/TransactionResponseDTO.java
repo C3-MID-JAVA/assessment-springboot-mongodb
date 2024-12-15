@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionResponseDTO {
-    private UUID id;
+    private String id;
 
     private double fee;
 

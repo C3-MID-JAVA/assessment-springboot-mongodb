@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public interface AccountService {
     AccountResponseDTO create(AccountRequestDTO accountRequestDTO);
-    List<AccountResponseDTO> getAllByUserId(UUID userId);
+    List<AccountResponseDTO> getAllByUserId(String userId);
     AccountResponseDTO findByAccountNumber(String accountNumber);
 }

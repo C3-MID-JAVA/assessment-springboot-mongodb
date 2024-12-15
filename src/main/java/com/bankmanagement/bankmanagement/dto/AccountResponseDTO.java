@@ -10,7 +10,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountResponseDTO {
-    private UUID id;
     private String accountNumber;
     private double balance;
 }
