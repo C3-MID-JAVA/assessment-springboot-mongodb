@@ -1,19 +1,15 @@
 package com.kgalarza.bancointegrador.mapper;
 
-import com.kgalarza.bancointegrador.model.dto.ClienteInDto;
-import com.kgalarza.bancointegrador.model.dto.ClienteOutDto;
-import com.kgalarza.bancointegrador.model.entity.Cliente;
-import com.kgalarza.bancointegrador.model.entity.Cuenta;
+import com.kgalarza.bancointegrador.model.dto.ClientInDto;
+import com.kgalarza.bancointegrador.model.dto.ClientOutDto;
+import com.kgalarza.bancointegrador.model.entity.Client;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
-public class ClienteMapper {
+public class ClientMapper {
 
-    public static Cliente toEntity(ClienteInDto dto) {
-        Cliente cliente = new Cliente();
+    public static Client toEntity(ClientInDto dto) {
+        Client cliente = new Client();
         cliente.setIdentificacion(dto.getIdentificacion());
         cliente.setNombre(dto.getNombre());
         cliente.setApellido(dto.getApellido());
@@ -24,9 +20,9 @@ public class ClienteMapper {
         return cliente;
     }
 
-    public static ClienteOutDto toDto(Cliente cliente) {
-        ClienteOutDto dto = new ClienteOutDto();
-        dto.setId(Long.valueOf(cliente.getId()));
+    public static ClientOutDto toDto(Client cliente) {
+        ClientOutDto dto = new ClientOutDto();
+        dto.setId(cliente.getId());
         dto.setIdentificacion(cliente.getIdentificacion());
         dto.setNombre(cliente.getNombre());
         dto.setApellido(cliente.getApellido());

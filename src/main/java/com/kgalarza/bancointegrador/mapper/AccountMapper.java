@@ -1,27 +1,23 @@
 package com.kgalarza.bancointegrador.mapper;
 
-import com.kgalarza.bancointegrador.model.dto.CuentaInDto;
-import com.kgalarza.bancointegrador.model.dto.CuentaOutDto;
-import com.kgalarza.bancointegrador.model.entity.Cliente;
-import com.kgalarza.bancointegrador.model.entity.Cuenta;
-import com.kgalarza.bancointegrador.model.entity.Movimiento;
+import com.kgalarza.bancointegrador.model.dto.AccountInDto;
+import com.kgalarza.bancointegrador.model.dto.AccountOutDto;
+import com.kgalarza.bancointegrador.model.entity.Client;
+import com.kgalarza.bancointegrador.model.entity.Account;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
-public class CuentaMapper {
-    public static Cuenta toEntity(CuentaInDto dto, Cliente cliente) {
-        Cuenta cuenta = new Cuenta();
+public class AccountMapper {
+    public static Account toEntity(AccountInDto dto, Client cliente) {
+        Account cuenta = new Account();
         cuenta.setNumeroCuenta(dto.getNumeroCuenta());
         cuenta.setSaldo(dto.getSaldo());
 //        cuenta.setCliente(cliente);
         return cuenta;
     }
 
-    public static CuentaOutDto toDto(Cuenta cuenta) {
-        CuentaOutDto dto = new CuentaOutDto();
+    public static AccountOutDto toDto(Account cuenta) {
+        AccountOutDto dto = new AccountOutDto();
         dto.setId(cuenta.getId());
         dto.setNumeroCuenta(cuenta.getNumeroCuenta());
         dto.setSaldo(cuenta.getSaldo());

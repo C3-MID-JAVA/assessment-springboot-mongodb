@@ -1,23 +1,22 @@
 package com.kgalarza.bancointegrador.model.entity;
 
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "tarjetas")
-public class Tarjeta {
+public class Card {
 
     @Id
-    private Long id;
+    private String id;
     private String numeroTarjeta;
     private String tipo;
-    private Cuenta cuenta;
+    private Account cuenta;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -37,11 +36,11 @@ public class Tarjeta {
         this.tipo = tipo;
     }
 
-    public Cuenta getCuenta() {
+    public Account getCuenta() {
         return cuenta;
     }
 
-    public void setCuenta(Cuenta cuenta) {
+    public void setCuenta(Account cuenta) {
         this.cuenta = cuenta;
     }
 }

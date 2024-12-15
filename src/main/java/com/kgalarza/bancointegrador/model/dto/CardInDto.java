@@ -1,19 +1,11 @@
 package com.kgalarza.bancointegrador.model.dto;
 
-public class TarjetaOutDto {
-    private Long id;
+public class CardInDto {
+
     private String numeroTarjeta;
     private String tipo;
     private String fechaExpiracion;
-    private Long cuentaId;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String cuentaId;
 
     public String getNumeroTarjeta() {
         return numeroTarjeta;
@@ -39,11 +31,11 @@ public class TarjetaOutDto {
         this.fechaExpiracion = fechaExpiracion;
     }
 
-    public Long getCuentaId() {
+    public String getCuentaId() {
         return cuentaId;
     }
 
-    public void setCuentaId(Long cuentaId) {
+    public void setCuentaId(String cuentaId) {
         this.cuentaId = cuentaId;
     }
 }

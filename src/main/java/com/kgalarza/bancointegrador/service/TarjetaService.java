@@ -1,20 +1,21 @@
 package com.kgalarza.bancointegrador.service;
 
-import com.kgalarza.bancointegrador.model.dto.TarjetaInDto;
-import com.kgalarza.bancointegrador.model.dto.TarjetaOutDto;
+import com.kgalarza.bancointegrador.model.dto.CardInDto;
+import com.kgalarza.bancointegrador.model.dto.CardOutDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface TarjetaService {
-    TarjetaOutDto crearTarjeta(TarjetaInDto tarjetaInDto);
 
-    List<TarjetaOutDto> obtenerTodasLasTarjetas();
+    CardOutDto crearTarjeta(CardInDto tarjetaInDto);
 
-    TarjetaOutDto obtenerTarjetaPorId(Long id);
+    List<CardOutDto> obtenerTodasLasTarjetas();
 
-    TarjetaOutDto actualizarTarjeta(Long id, TarjetaInDto tarjetaInDto);
+    CardOutDto obtenerTarjetaPorId(String id);
 
-    void eliminarTarjeta(Long id);
+    CardOutDto actualizarTarjeta(String id, CardInDto tarjetaInDto);
+
+    void eliminarTarjeta(String id);
 }

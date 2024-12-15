@@ -1,7 +1,7 @@
 package com.kgalarza.bancointegrador.service;
 
-import com.kgalarza.bancointegrador.model.dto.CuentaInDto;
-import com.kgalarza.bancointegrador.model.dto.CuentaOutDto;
+import com.kgalarza.bancointegrador.model.dto.AccountInDto;
+import com.kgalarza.bancointegrador.model.dto.AccountOutDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +9,13 @@ import java.util.List;
 @Service
 public interface CuentaService {
 
-    CuentaOutDto crearCuenta(CuentaInDto cuentaInDto);
+    AccountOutDto crearCuenta(AccountInDto cuentaInDto);
 
-    List<CuentaOutDto> obtenerTodasLasCuentas();
+    List<AccountOutDto> obtenerTodasLasCuentas();
 
-    CuentaOutDto obtenerCuentaPorId(Long id);
+    AccountOutDto obtenerCuentaPorId(String id);
 
-    CuentaOutDto actualizarCuenta(Long id, CuentaInDto cuentaInDto);
+    AccountOutDto actualizarCuenta(String id, AccountInDto cuentaInDto);
 
-    void eliminarCuenta(Long id);
+    void eliminarCuenta(String id);
 }

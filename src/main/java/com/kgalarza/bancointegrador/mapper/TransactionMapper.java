@@ -1,12 +1,12 @@
 package com.kgalarza.bancointegrador.mapper;
 
-import com.kgalarza.bancointegrador.model.dto.MovimientoOutDto;
-import com.kgalarza.bancointegrador.model.entity.Movimiento;
+import com.kgalarza.bancointegrador.model.dto.TransactionOutDto;
+import com.kgalarza.bancointegrador.model.entity.Transaction;
 
-public class MovimientoMapper {
+public class TransactionMapper {
 
-    public static MovimientoOutDto mapToDto(Movimiento movimiento) {
-        MovimientoOutDto dto = new MovimientoOutDto();
+    public static TransactionOutDto mapToDto(Transaction movimiento) {
+        TransactionOutDto dto = new TransactionOutDto();
         dto.setId(movimiento.getId());
         dto.setDescripcion(movimiento.getDescripcion());
         dto.setMonto(movimiento.getMonto());

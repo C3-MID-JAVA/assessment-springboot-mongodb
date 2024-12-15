@@ -1,13 +1,16 @@
-package com.kgalarza.bancointegrador.model.dto;
+package com.kgalarza.bancointegrador.model.entity;
 
-import com.kgalarza.bancointegrador.model.entity.Cuenta;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class ClienteOutDto {
+@Document(collection = "clientes")
+public class Client {
 
-    private Long id;
+    @Id
+    private String id;
     private String identificacion;
     private String nombre;
     private String apellido;
@@ -15,17 +18,20 @@ public class ClienteOutDto {
     private String telefono;
     private String direccion;
     private LocalDate fechaNacimiento;
-    private List<Long> cuentasIds; // IDs de las cuentas asociadas
 
-    // Getters y Setters
-    public Long getId() {
+
+    private List<String> cuentasIds;
+
+    public Client() {
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
-
     public String getIdentificacion() {
         return identificacion;
     }
@@ -82,11 +88,11 @@ public class ClienteOutDto {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public List<Long> getCuentasIds() {
+    public List<String> getCuentasIds() {
         return cuentasIds;
     }
 
-    public void setCuentasIds(List<Long> cuentasIds) {
+    public void setCuentasIds(List<String> cuentasIds) {
         this.cuentasIds = cuentasIds;
     }
 }

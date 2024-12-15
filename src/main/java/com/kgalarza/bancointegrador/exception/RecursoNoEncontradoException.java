@@ -1,7 +1,0 @@
-package com.kgalarza.bancointegrador.exception;
-
-public class RecursoNoEncontradoException  extends RuntimeException {
-    public RecursoNoEncontradoException(String mensaje) {
-        super(mensaje);
-    }
-}

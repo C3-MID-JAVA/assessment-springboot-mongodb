@@ -1,38 +1,37 @@
-package com.kgalarza.bancointegrador.model.entity;
+package com.kgalarza.bancointegrador.model.dto;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
-@Document(collection = "clientes")
-public class Cliente {
+public class ClientInDto {
 
-    @Id
-    private String id;
+    @NotBlank(message = "La identificación no puede estar vacía")
+    @Size(min = 10, max = 10, message = "La identificación debe tener exactamente 10 caracteres.")
+    @Pattern(regexp = "\\d{10}", message = "La identificación debe contener solo números.")
     private String identificacion;
+
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     private String nombre;
+
+    @NotBlank(message = "El apellido no puede estar vacío")
+    @Size(min = 2, max = 50, message = "El apellido debe tener entre 2 y 50 caracteres")
     private String apellido;
+
+    @Email(message = "El correo electrónico no tiene un formato válido")
+    @NotBlank(message = "El correo electrónico no puede estar vacío")
     private String email;
+
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "El número de teléfono no tiene un formato válido")
     private String telefono;
+
+    @NotBlank(message = "La dirección no puede estar vacía")
     private String direccion;
+
+    //@Past(message = "La fecha de nacimiento debe ser una fecha pasada")
     private LocalDate fechaNacimiento;
 
-    //Se cambió a una lista de strings
-    private List<String> cuentasIds;
-
-    public Cliente() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
     public String getIdentificacion() {
         return identificacion;
     }
@@ -87,13 +86,5 @@ public class Cliente {
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public List<String> getCuentasIds() {
-        return cuentasIds;
-    }
-
-    public void setCuentasIds(List<String> cuentasIds) {
-        this.cuentasIds = cuentasIds;
     }
 }

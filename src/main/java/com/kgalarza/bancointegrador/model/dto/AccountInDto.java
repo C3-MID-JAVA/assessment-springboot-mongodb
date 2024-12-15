@@ -2,7 +2,7 @@ package com.kgalarza.bancointegrador.model.dto;
 
 import jakarta.validation.constraints.*;
 
-public class CuentaInDto {
+public class AccountInDto {
 
     @NotNull(message = "El número de cuenta no puede ser nulo")
     @Size(min = 10, max = 10, message = "El número de cuenta debe tener exactamente 10 caracteres")
@@ -14,8 +14,7 @@ public class CuentaInDto {
     private Double saldo;
 
     @NotNull(message = "El ID de cliente no puede ser nulo")
-    @Positive(message = "El ID de cliente debe ser un número positivo")
-    private Long clienteId;
+    private String clienteId;
 
 
     public String getNumeroCuenta() {
@@ -34,11 +33,11 @@ public class CuentaInDto {
         this.saldo = saldo;
     }
 
-    public Long getClienteId() {
+    public String getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(Long clienteId) {
+    public void setClienteId(String clienteId) {
         this.clienteId = clienteId;
     }
 }

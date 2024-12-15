@@ -1,5 +1,9 @@
 package com.kgalarza.bancointegrador.exception;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,13 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Errores de validación detectados",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+            )
+    })
     public ResponseEntity<Map<String, Object>> handleValidationException(ConstraintViolationException ex) {
         Map<String, Object> response = new HashMap<>();
         response.put("status", "error");
@@ -32,6 +43,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BindException.class)
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Errores de validación de campos detectados",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+            )
+    })
     public ResponseEntity<Map<String, Object>> handleBindException(BindingResult bindingResult) {
         Map<String, Object> response = new HashMap<>();
         response.put("status", "error");
@@ -47,18 +65,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "error");
-        response.put("message", "Ocurrió un error interno en el servidor");
-        response.put("details", ex.getMessage());
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-    }
-
-    @ExceptionHandler(RecursoNoEncontradoException.class)
-    public ResponseEntity<Map<String, Object>> manejarRecursoNoEncontrado(RecursoNoEncontradoException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Recurso no encontrado",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+            )
+    })
+    public ResponseEntity<Map<String, Object>> manejarRecursoNoEncontrado(ResourceNotFoundException ex) {
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("estado", "alerta");
         respuesta.put("mensaje", ex.getMessage());

@@ -1,25 +1,22 @@
 package com.kgalarza.bancointegrador.service;
 
-import com.kgalarza.bancointegrador.model.dto.MovimientoInDto;
-import com.kgalarza.bancointegrador.model.dto.MovimientoOutDto;
+import com.kgalarza.bancointegrador.model.dto.TransactionInDto;
+import com.kgalarza.bancointegrador.model.dto.TransactionOutDto;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public interface MovimientoService {
 
-    MovimientoOutDto realizarDepositoSucursal(MovimientoInDto movimientoInDto);
+    TransactionOutDto realizarDepositoSucursal(TransactionInDto movimientoInDto);
 
-    MovimientoOutDto realizarDepositoCajero(MovimientoInDto movimientoInDto);
+    TransactionOutDto realizarDepositoCajero(TransactionInDto movimientoInDto);
 
-    MovimientoOutDto realizarDepositoOtraCuenta(MovimientoInDto movimientoInDto);
+    TransactionOutDto realizarDepositoOtraCuenta(TransactionInDto movimientoInDto);
 
-    MovimientoOutDto realizarCompraFisica(MovimientoInDto movimientoInDto);
+    TransactionOutDto realizarCompraFisica(TransactionInDto movimientoInDto);
 
-    MovimientoOutDto realizarCompraWeb(MovimientoInDto movimientoInDto);
+    TransactionOutDto realizarCompraWeb(TransactionInDto movimientoInDto);
 
-    MovimientoOutDto realizarRetiroCajero(MovimientoInDto movimientoInDto);
+    TransactionOutDto realizarRetiroCajero(TransactionInDto movimientoInDto);
 
-//    List<MovimientoOutDto> obtenerMovimientosPorCuenta(Long cuentaId);
 }

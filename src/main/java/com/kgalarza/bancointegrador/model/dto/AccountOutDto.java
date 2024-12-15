@@ -2,18 +2,20 @@ package com.kgalarza.bancointegrador.model.dto;
 
 import java.util.List;
 
-public class CuentaOutDto {
-    private Long id;
+public class AccountOutDto {
+
+    private String id;
     private String numeroCuenta;
     private Double saldo;
     private Long clienteId;
     private List<Long> movimientosIds;
     private Long tarjetaId;
-    public Long getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

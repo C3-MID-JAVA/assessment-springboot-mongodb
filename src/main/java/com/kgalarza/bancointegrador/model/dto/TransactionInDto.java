@@ -1,27 +1,26 @@
-package com.kgalarza.bancointegrador.model.entity;
+package com.kgalarza.bancointegrador.model.dto;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.validation.constraints.*;
 
-@Document(collection = "movimientos")
-public class Movimiento {
+public class TransactionInDto {
 
-    @Id
-    private Long id;
+    @NotNull(message = "La descripción no puede ser nula")
+    @Size(min = 5, max = 255, message = "La descripción debe tener entre 5 y 255 caracteres")
     private String descripcion;
+
+    @NotNull(message = "El monto no puede ser nulo")
+    @DecimalMin(value = "0.01", inclusive = true, message = "El monto debe ser mayor a 0")
     private Double monto;
+
+    @NotNull(message = "El tipo de movimiento no puede ser nulo")
     private String tipoMovimiento;
-    private String fecha;
+
+    @NotNull(message = "El ID de cuenta no puede ser nulo")
     private String cuentaId;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    @NotNull(message = "La fecha no puede ser nula")
+    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "La fecha debe estar en el formato 'yyyy-MM-dd'")
+    private String fecha;
 
     public String getDescripcion() {
         return descripcion;
@@ -45,10 +44,6 @@ public class Movimiento {
 
     public void setTipoMovimiento(String tipoMovimiento) {
         this.tipoMovimiento = tipoMovimiento;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getCuentaId() {

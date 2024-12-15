@@ -1,24 +1,22 @@
 package com.kgalarza.bancointegrador.service;
 
-import com.kgalarza.bancointegrador.model.dto.ClienteInDto;
-import com.kgalarza.bancointegrador.model.dto.ClienteOutDto;
-import com.kgalarza.bancointegrador.model.entity.Cliente;
+import com.kgalarza.bancointegrador.model.dto.ClientInDto;
+import com.kgalarza.bancointegrador.model.dto.ClientOutDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface ClienteService {
 
 
-    ClienteOutDto guardarCliente(ClienteInDto clienteInDto);
+    ClientOutDto guardarCliente(ClientInDto clienteInDto);
 
-    List<ClienteOutDto> obtenerTodos();
+    List<ClientOutDto> obtenerTodos();
 
-    ClienteOutDto obtenerPorId(String id);
+    ClientOutDto obtenerPorId(String id);
 
-    ClienteOutDto actualizarCliente(String id, ClienteInDto clienteInDto);
+    ClientOutDto actualizarCliente(String id, ClientInDto clienteInDto);
 
     void eliminarCliente(String id);
 }

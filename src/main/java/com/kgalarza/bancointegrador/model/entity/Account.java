@@ -1,17 +1,16 @@
 package com.kgalarza.bancointegrador.model.entity;
 
 
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Document(collection = "cuentas")
-public class Cuenta {
+public class Account {
 
     @Id
-    private long id;
+    private String id;
     private String numeroCuenta;
     private Double saldo;
 
@@ -19,11 +18,11 @@ public class Cuenta {
     private String tarjetaId;
     private List<String> movimientosIds;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
