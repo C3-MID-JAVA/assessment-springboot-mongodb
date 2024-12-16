@@ -1,6 +1,7 @@
 package org.example.financespro.service.impl;
 
 import java.math.BigDecimal;
+
 import org.example.financespro.dto.request.TransactionRequestDto;
 import org.example.financespro.dto.response.TransactionResponseDto;
 import org.example.financespro.exception.CustomException;
@@ -23,9 +24,9 @@ public class TransactionServiceImpl implements TransactionService {
   private final StrategyContext strategyContext;
 
   public TransactionServiceImpl(
-      AccountRepository accountRepository,
-      TransactionRepository transactionRepository,
-      StrategyContext strategyContext) {
+          AccountRepository accountRepository,
+          TransactionRepository transactionRepository,
+          StrategyContext strategyContext) {
     this.accountRepository = accountRepository;
     this.transactionRepository = transactionRepository;
     this.strategyContext = strategyContext;
@@ -34,38 +35,51 @@ public class TransactionServiceImpl implements TransactionService {
   @Override
   @Transactional
   public TransactionResponseDto processTransaction(TransactionRequestDto requestDTO) {
-    Account account =
-        accountRepository
+
+    if (requestDTO.getAccountId() == null || requestDTO.getAccountId().isBlank()) {
+      throw new CustomException("Account ID cannot be null or blank");
+    }
+    if (requestDTO.getAmount() == null || requestDTO.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+      throw new CustomException("Transaction amount must be a positive value");
+    }
+    if (requestDTO.getType() == null || requestDTO.getType().isBlank()) {
+      throw new CustomException("Transaction type cannot be null or blank");
+    }
+
+
+    Account account = accountRepository
             .findById(requestDTO.getAccountId())
-            .orElseThrow(() -> new CustomException("Account not found"));
+            .orElseThrow(() -> new CustomException("Account not found with ID: " + requestDTO.getAccountId()));
+
 
     TransactionType transactionType;
     try {
       transactionType = TransactionType.valueOf(requestDTO.getType().toUpperCase());
     } catch (IllegalArgumentException e) {
-      throw new CustomException("Invalid transaction type");
+      throw new CustomException("Invalid transaction type: " + requestDTO.getType());
     }
 
     TransactionCostStrategy strategy = determineStrategy(transactionType);
     strategyContext.setStrategy(strategy);
 
     BigDecimal transactionCost = strategyContext.executeStrategy(requestDTO.getAmount());
-    BigDecimal newBalance =
-        account.getBalance().subtract(requestDTO.getAmount().add(transactionCost));
+    BigDecimal newBalance = account.getBalance().subtract(requestDTO.getAmount().add(transactionCost));
+
 
     if (newBalance.compareTo(BigDecimal.ZERO) < 0) {
-      throw new CustomException("Insufficient funds");
+      throw new CustomException("Insufficient funds for transaction");
     }
+
 
     account.setBalance(newBalance);
     accountRepository.save(account);
+
 
     Transaction transaction = new Transaction();
     transaction.setAccount(account);
     transaction.setType(transactionType.name());
     transaction.setAmount(requestDTO.getAmount());
     transaction.setTransactionCost(transactionCost);
-
     transactionRepository.save(transaction);
 
     return TransactionMapper.toResponseDTO(transaction, newBalance);
