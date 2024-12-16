@@ -1,15 +1,13 @@
 package org.example.financespro.model;
 
+import java.math.BigDecimal;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.math.BigDecimal;
 
 @Document("transactions")
 public class Transaction {
 
-  @Id
-  private String id;
+  @Id private String id;
   private String accountId;
   private String type;
   private BigDecimal amount;
