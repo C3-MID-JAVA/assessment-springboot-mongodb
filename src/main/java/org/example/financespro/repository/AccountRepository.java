@@ -1,6 +1,10 @@
 package org.example.financespro.repository;
 
 import org.example.financespro.model.Account;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface AccountRepository extends JpaRepository<Account, Long> {}
+import java.util.Optional;
+
+public interface AccountRepository extends MongoRepository<Account, String> {
+    Optional<Account> findByAccountNumber(String accountNumber);
+}
