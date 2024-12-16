@@ -27,6 +27,6 @@ public class AccountController {
   @PostMapping("/details")
   public ResponseEntity<AccountResponseDto> getAccount(@Valid @RequestBody AccountRequestDto request) {
     // Assuming the `accountNumber` in the request is used to fetch the account details
-    return ResponseEntity.ok(accountService.getAccountById(request.getAccountNumber()));
+    return ResponseEntity.ok(accountService.getAccountDetailsByNumber(request.getNumber()));
   }
 }
