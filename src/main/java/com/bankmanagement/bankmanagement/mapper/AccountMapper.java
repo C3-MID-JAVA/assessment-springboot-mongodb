@@ -8,6 +8,7 @@ public class AccountMapper {
         AccountResponseDTO accountResponseDTO = new AccountResponseDTO();
         accountResponseDTO.setAccountNumber(account.getAccountNumber());
         accountResponseDTO.setBalance(account.getBalance());
+        accountResponseDTO.setUserId(account.getUserId());
         return accountResponseDTO;
     }
 }

@@ -12,4 +12,5 @@ import java.util.UUID;
 public class AccountResponseDTO {
     private String accountNumber;
     private double balance;
+    private String userId;
 }
