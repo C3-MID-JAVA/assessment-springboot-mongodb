@@ -19,5 +19,5 @@ public interface AccountService {
    * @param accountNumber the unique account number
    * @return the account details
    */
-  AccountResponseDto getAccountById(String accountNumber);
+  AccountResponseDto getAccountDetailsByNumber(String accountNumber);
 }

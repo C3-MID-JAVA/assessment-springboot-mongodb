@@ -23,7 +23,7 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public AccountResponseDto createAccount(AccountRequestDto requestDTO) {
-    if (requestDTO.getAccountNumber() == null || requestDTO.getAccountNumber().isBlank()) {
+    if (requestDTO.getNumber() == null || requestDTO.getNumber().isBlank()) {
       throw new CustomException("Account number cannot be null or blank");
     }
     if (requestDTO.getInitialBalance() == null || requestDTO.getInitialBalance() < 0) {
@@ -31,14 +31,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    Optional<Account> existingAccount = accountRepository.findByAccountNumber(requestDTO.getAccountNumber());
+    Optional<Account> existingAccount = accountRepository.findByAccountNumber(requestDTO.getNumber());
     if (existingAccount.isPresent()) {
       throw new CustomException("Account with the same number already exists");
     }
 
 
     Account account = new Account();
-    account.setAccountNumber(requestDTO.getAccountNumber());
+    account.setAccountNumber(requestDTO.getNumber());
     account.setBalance(BigDecimal.valueOf(requestDTO.getInitialBalance()));
     account = accountRepository.save(account);
 
@@ -46,7 +46,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public AccountResponseDto getAccountById(String accountId) {
+  public AccountResponseDto getAccountDetailsByNumber(String accountId) {
 
     if (accountId == null || accountId.isBlank()) {
       throw new CustomException("Account ID cannot be null or blank");
