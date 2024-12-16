@@ -94,7 +94,8 @@ public class AccountServiceTest {
         String accountNumber = "12345678";
         Account account = new Account(
                 "675e0e4a59d6de4eda5b29b8",
-                accountNumber, 100.0,
+                accountNumber,
+                100.0,
                 "675e0e1259d6de4eda5b29b7");
 
         when(accountRepository.findByAccountNumber(accountNumber)).thenReturn(Optional.of(account));
