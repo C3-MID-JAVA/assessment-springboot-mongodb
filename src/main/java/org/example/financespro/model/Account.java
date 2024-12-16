@@ -1,16 +1,18 @@
 package org.example.financespro.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.math.BigDecimal;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("accounts")
 public class Account {
 
-  @Id
-  private String id;
+  @Id private String id;
+
+  @Indexed(unique = true)
   private String accountNumber;
+
   private BigDecimal balance;
 
   public String getId() {
