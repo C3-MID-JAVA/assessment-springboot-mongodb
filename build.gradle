@@ -1,0 +1,69 @@
+plugins {
+    id 'org.springframework.boot' version '3.1.0'
+    id 'io.spring.dependency-management' version '1.1.3'
+    id 'java'
+    id 'com.diffplug.spotless' version '6.19.0'
+    id 'checkstyle'
+}
+
+group = 'com.example'
+version = '1.0.0'
+java {
+    sourceCompatibility = '17'
+}
+
+spotless {
+    java {
+        googleJavaFormat() // Applies Google Java Format
+    }
+}
+
+checkstyle {
+    toolVersion = '10.12.0'
+    configFile = file('config/checkstyle/checkstyle.xml')
+    ignoreFailures = false
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Main dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // dotenv for loading environment variables
+    implementation 'io.github.cdimascio:dotenv-java:2.2.0'
+
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
+    // Test dependencies
+    testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.5.3'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+    }
+}
+
+tasks.named('check').configure {
+    dependsOn 'checkstyleMain', 'checkstyleTest', 'spotlessCheck'
+}
+
+tasks.register('ciCheck') {
+    group = 'verification'
+    description = 'Runs all checks for CI/CD pipelines'
+    dependsOn 'checkstyleMain', 'spotlessCheck', 'test'
+}
