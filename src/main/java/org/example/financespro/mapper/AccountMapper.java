@@ -5,9 +5,7 @@ import org.example.financespro.model.Account;
 
 public class AccountMapper {
 
-  private AccountMapper() {
-    // Private constructor to prevent instantiation
-  }
+  private AccountMapper() {}
 
   public static AccountResponseDto toResponseDTO(Account account) {
     AccountResponseDto response = new AccountResponseDto();
