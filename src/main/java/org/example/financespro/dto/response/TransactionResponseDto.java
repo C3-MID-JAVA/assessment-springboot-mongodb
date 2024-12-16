@@ -4,25 +4,25 @@ import java.math.BigDecimal;
 
 public class TransactionResponseDto {
 
-  private String type;
-  private BigDecimal amount;
+  private String transactionType;
+  private BigDecimal transactionAmount;
   private BigDecimal transactionCost;
   private BigDecimal remainingBalance;
 
-  public String getType() {
-    return type;
+  public String getTransactionType() {
+    return transactionType;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setTransactionType(String transactionType) {
+    this.transactionType = transactionType;
   }
 
-  public BigDecimal getAmount() {
-    return amount;
+  public BigDecimal getTransactionAmount() {
+    return transactionAmount;
   }
 
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
+  public void setTransactionAmount(BigDecimal transactionAmount) {
+    this.transactionAmount = transactionAmount;
   }
 
   public BigDecimal getTransactionCost() {

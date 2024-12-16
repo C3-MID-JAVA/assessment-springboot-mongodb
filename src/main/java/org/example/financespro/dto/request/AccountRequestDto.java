@@ -5,16 +5,18 @@ import jakarta.validation.constraints.NotNull;
 
 public class AccountRequestDto {
 
-  @NotBlank private String accountNumber;
+  @NotBlank(message = "Account number is required.")
+  private String number;
 
-  @NotNull private Double initialBalance;
+  @NotNull(message = "Initial balance is required.")
+  private Double initialBalance;
 
-  public String getAccountNumber() {
-    return accountNumber;
+  public String getNumber() {
+    return number;
   }
 
-  public void setAccountNumber(String accountNumber) {
-    this.accountNumber = accountNumber;
+  public void setNumber(String number) {
+    this.number = number;
   }
 
   public Double getInitialBalance() {

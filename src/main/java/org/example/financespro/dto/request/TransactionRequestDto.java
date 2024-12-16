@@ -6,33 +6,36 @@ import java.math.BigDecimal;
 
 public class TransactionRequestDto {
 
-  @NotNull private Long accountId;
+  @NotNull(message = "Account ID is required.")
+  private String accountId;
 
-  @NotBlank private String type;
+  @NotBlank(message = "Transaction type is required.")
+  private String transactionType;
 
-  @NotNull private BigDecimal amount;
+  @NotNull(message = "Transaction amount is required.")
+  private BigDecimal transactionAmount;
 
-  public Long getAccountId() {
+  public String getAccountId() {
     return accountId;
   }
 
-  public void setAccountId(Long accountId) {
+  public void setAccountId(String accountId) {
     this.accountId = accountId;
   }
 
-  public String getType() {
-    return type;
+  public String getTransactionType() {
+    return transactionType;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setTransactionType(String transactionType) {
+    this.transactionType = transactionType;
   }
 
-  public BigDecimal getAmount() {
-    return amount;
+  public BigDecimal getTransactionAmount() {
+    return transactionAmount;
   }
 
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
+  public void setTransactionAmount(BigDecimal transactionAmount) {
+    this.transactionAmount = transactionAmount;
   }
 }

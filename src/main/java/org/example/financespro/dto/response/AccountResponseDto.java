@@ -2,15 +2,15 @@ package org.example.financespro.dto.response;
 
 public class AccountResponseDto {
 
-  private Long id;
+  private String id;
   private String accountNumber;
   private Double balance;
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 
