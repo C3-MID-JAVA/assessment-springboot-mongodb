@@ -23,8 +23,8 @@ public class FinanceFacade {
         return accountService.createAccount(request);
     }
 
-    public AccountResponseDto getAccountDetails(AccountRequestDto request) {
-        return accountService.getAccountDetailsByNumber(request.getNumber());
+    public AccountResponseDto getAccountDetails(String accountNumber) {
+        return accountService.getAccountDetailsByNumber(accountNumber);
     }
 
     public TransactionResponseDto processTransaction(TransactionRequestDto request) {
