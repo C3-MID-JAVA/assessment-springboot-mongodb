@@ -11,10 +11,8 @@ public class FinancesProApplication {
     // Load .env file
     Dotenv dotenv = Dotenv.configure().directory("./").load();
 
-    // Set environment variables
-    System.setProperty("SPRING_DATASOURCE_URL", dotenv.get("SPRING_DATASOURCE_URL"));
-    System.setProperty("SPRING_DATASOURCE_USERNAME", dotenv.get("SPRING_DATASOURCE_USERNAME"));
-    System.setProperty("SPRING_DATASOURCE_PASSWORD", dotenv.get("SPRING_DATASOURCE_PASSWORD"));
+    // Set MongoDB connection environment variables
+    System.setProperty("SPRING_MONGODB_URI", dotenv.get("SPRING_MONGODB_URI"));
 
     SpringApplication.run(FinancesProApplication.class, args);
   }
