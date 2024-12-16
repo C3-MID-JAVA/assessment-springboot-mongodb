@@ -1,32 +1,65 @@
 package org.example.financespro.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.financespro.dto.request.AccountRequestDto;
 import org.example.financespro.dto.response.AccountResponseDto;
-import org.example.financespro.service.AccountService;
+import org.example.financespro.facade.FinanceFacade;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/accounts")
+@Tag(name = "Accounts", description = "Endpoints for managing accounts")
+@Validated // Habilita validaciones en los DTO
 public class AccountController {
 
-  private final AccountService accountService;
+  private final FinanceFacade financeFacade;
 
-  public AccountController(AccountService accountService) {
-    this.accountService = accountService;
+  public AccountController(FinanceFacade financeFacade) {
+    this.financeFacade = financeFacade;
   }
 
   @PostMapping
-  public ResponseEntity<AccountResponseDto> createAccount(@Valid @RequestBody AccountRequestDto request) {
-    return ResponseEntity.ok(accountService.createAccount(request));
+  @Operation(
+      summary = "Create an account",
+      description = "Creates a new account with the provided details.",
+      responses = {
+        @ApiResponse(
+            responseCode = "201",
+            description = "Account successfully created",
+            content = @Content(mediaType = "application/json")),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Invalid input data",
+            content = @Content(mediaType = "application/json"))
+      })
+  public ResponseEntity<AccountResponseDto> createAccount(
+      @Validated @RequestBody AccountRequestDto request) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(financeFacade.createAccount(request));
   }
 
-  @PostMapping("/details")
-  public ResponseEntity<AccountResponseDto> getAccount(@Valid @RequestBody AccountRequestDto request) {
-    // Assuming the `accountNumber` in the request is used to fetch the account details
-    return ResponseEntity.ok(accountService.getAccountDetailsByNumber(request.getNumber()));
+  @GetMapping("/{accountNumber}")
+  @Operation(
+      summary = "Get account details",
+      description = "Retrieves details of an account by its account number.",
+      responses = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Account details retrieved",
+            content = @Content(mediaType = "application/json")),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Account not found",
+            content = @Content(mediaType = "application/json"))
+      })
+  public ResponseEntity<AccountResponseDto> getAccount(
+      @Parameter(description = "The unique account number") @PathVariable String accountNumber) {
+    return ResponseEntity.ok(financeFacade.getAccountDetails(accountNumber));
   }
 }
