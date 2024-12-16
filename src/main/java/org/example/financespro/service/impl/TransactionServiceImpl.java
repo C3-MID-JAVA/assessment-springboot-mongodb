@@ -39,51 +39,47 @@ public class TransactionServiceImpl implements TransactionService {
     if (requestDTO.getAccountId() == null || requestDTO.getAccountId().isBlank()) {
       throw new CustomException("Account ID cannot be null or blank");
     }
-    if (requestDTO.getAmount() == null || requestDTO.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+    if (requestDTO.getTransactionAmount() == null || requestDTO.getTransactionAmount().compareTo(BigDecimal.ZERO) <= 0) {
       throw new CustomException("Transaction amount must be a positive value");
     }
-    if (requestDTO.getType() == null || requestDTO.getType().isBlank()) {
+    if (requestDTO.getTransactionType() == null || requestDTO.getTransactionType().isBlank()) {
       throw new CustomException("Transaction type cannot be null or blank");
     }
-
 
     Account account = accountRepository
             .findById(requestDTO.getAccountId())
             .orElseThrow(() -> new CustomException("Account not found with ID: " + requestDTO.getAccountId()));
 
-
     TransactionType transactionType;
     try {
-      transactionType = TransactionType.valueOf(requestDTO.getType().toUpperCase());
+      transactionType = TransactionType.valueOf(requestDTO.getTransactionType().toUpperCase());
     } catch (IllegalArgumentException e) {
-      throw new CustomException("Invalid transaction type: " + requestDTO.getType());
+      throw new CustomException("Invalid transaction type: " + requestDTO.getTransactionType());
     }
 
     TransactionCostStrategy strategy = determineStrategy(transactionType);
     strategyContext.setStrategy(strategy);
 
-    BigDecimal transactionCost = strategyContext.executeStrategy(requestDTO.getAmount());
-    BigDecimal newBalance = account.getBalance().subtract(requestDTO.getAmount().add(transactionCost));
-
+    BigDecimal transactionCost = strategyContext.executeStrategy(requestDTO.getTransactionAmount());
+    BigDecimal newBalance = account.getBalance().subtract(requestDTO.getTransactionAmount().add(transactionCost));
 
     if (newBalance.compareTo(BigDecimal.ZERO) < 0) {
       throw new CustomException("Insufficient funds for transaction");
     }
 
-
     account.setBalance(newBalance);
     accountRepository.save(account);
 
-
     Transaction transaction = new Transaction();
-    transaction.setAccount(account);
+    transaction.setAccountId(account.getId()); // Set the accountId instead of the Account object
     transaction.setType(transactionType.name());
-    transaction.setAmount(requestDTO.getAmount());
+    transaction.setAmount(requestDTO.getTransactionAmount());
     transaction.setTransactionCost(transactionCost);
     transactionRepository.save(transaction);
 
     return TransactionMapper.toResponseDTO(transaction, newBalance);
   }
+
 
   private TransactionCostStrategy determineStrategy(TransactionType type) {
     return switch (type) {
