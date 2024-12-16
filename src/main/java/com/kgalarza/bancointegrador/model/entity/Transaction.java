@@ -17,6 +17,18 @@ public class Transaction {
     private LocalDate fecha;
     private String cuentaId;
 
+    public Transaction() {
+    }
+
+    public Transaction(String id, String descripcion, BigDecimal monto, String tipoMovimiento, LocalDate fecha, String cuentaId) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.monto = monto;
+        this.tipoMovimiento = tipoMovimiento;
+        this.fecha = fecha;
+        this.cuentaId = cuentaId;
+    }
+
     public String getId() {
         return id;
     }

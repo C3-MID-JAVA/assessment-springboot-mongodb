@@ -12,7 +12,6 @@ public class AccountMapper {
         Account cuenta = new Account();
         cuenta.setNumeroCuenta(dto.getNumeroCuenta());
         cuenta.setSaldo(dto.getSaldo());
-//        cuenta.setCliente(cliente);
         return cuenta;
     }
 

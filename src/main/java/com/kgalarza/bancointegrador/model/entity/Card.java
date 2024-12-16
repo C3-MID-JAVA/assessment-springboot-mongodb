@@ -12,6 +12,15 @@ public class Card {
     private String tipo;
     private Account cuenta;
 
+    public Card() {
+    }
+
+    public Card(String id, String numeroTarjeta, String tipo) {
+        this.id = id;
+        this.numeroTarjeta = numeroTarjeta;
+        this.tipo = tipo;
+    }
+
     public String getId() {
         return id;
     }

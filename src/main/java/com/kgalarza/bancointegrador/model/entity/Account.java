@@ -19,6 +19,17 @@ public class Account {
     private String tarjetaId;
     private List<String> movimientosIds;
 
+    public Account() {
+    }
+
+    public Account(String id, String numeroCuenta, BigDecimal saldo, String clienteId, String tarjetaId) {
+        this.id = id;
+        this.numeroCuenta = numeroCuenta;
+        this.saldo = saldo;
+        this.clienteId = clienteId;
+        this.tarjetaId = tarjetaId;
+    }
+
     public String getId() {
         return id;
     }
