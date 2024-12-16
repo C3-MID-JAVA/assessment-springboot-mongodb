@@ -1,37 +1,36 @@
 package com.sofka.bank.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 
-@Entity
-@Table(name = "bank_account")
+@Document(collection = "bank_account")
 public class BankAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column (name= "account_number", nullable = false, unique = true)
+    @Field("account_number")
     private String accountNumber;
 
-    @Column(nullable = false, name = "account_holder")
+    @Field("account_holder")
     private String accountHolder;
 
-    @Column(nullable = false, name = "global_balance", columnDefinition = "DECIMAL(10,2) CHECK (global_balance >= 0)")
+    @Field("global_balance")
     private double globalBalance;
 
-    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity =
-            Transaction.class)
     @JsonIgnore
     private List<Transaction> transactions;
 
     public BankAccount() {}
 
-    public BankAccount(Long id, String accountNumber, String accountHolder, double globalBalance,
+    public BankAccount(String id, String accountNumber, String accountHolder, double globalBalance,
                        List<Transaction> transactions) {
         this.id = id;
         this.accountNumber = accountNumber;
@@ -40,7 +39,7 @@ public class BankAccount {
         this.transactions = new ArrayList<>();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -60,7 +59,7 @@ public class BankAccount {
         return transactions;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

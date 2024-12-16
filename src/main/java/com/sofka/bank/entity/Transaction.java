@@ -1,29 +1,33 @@
 package com.sofka.bank.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name="transaction")
+@Document(collection = "transaction")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    private String transactionType;
+    @Enumerated(EnumType.STRING)
+    @Field("transaction_type")
+    private TransactionType transactionType;
+
     private double amount;
     private double fee;
     private LocalDateTime date;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "bank_account_id", nullable = false)
-
+    @Field("bank_account_id")
     private BankAccount bankAccount;
 
     public Transaction() {}
 
-    public Transaction(Long id, String transactionType, double amount, double fee, LocalDateTime date, String description, BankAccount bankAccount) {
+    public Transaction(String id, TransactionType transactionType, double amount, double fee, LocalDateTime date,
+                       String description,
+                       BankAccount bankAccount) {
         this.id = id;
         this.transactionType = transactionType;
         this.amount = amount;
@@ -33,13 +37,12 @@ public class Transaction {
         this.bankAccount = bankAccount;
     }
 
-    // Getters and Setters
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public String getTransactionType() {
+    public TransactionType getTransactionType() {
         return transactionType;
     }
 
@@ -63,11 +66,11 @@ public class Transaction {
         return bankAccount;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setTransactionType(String transactionType) {
+    public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
     }
 

@@ -5,6 +5,7 @@ import com.sofka.bank.entity.BankAccount;
 import com.sofka.bank.dto.TransactionDTO;
 import com.sofka.bank.entity.Transaction;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class DTOMapper {
@@ -14,7 +15,7 @@ public class DTOMapper {
                 a.getAccountNumber(),
                 a.getAccountHolder(),
                 a.getGlobalBalance(),
-                a.getTransactions().stream().map(DTOMapper::toTransactionDTO).collect(Collectors.toList()));
+          new ArrayList<TransactionDTO>());
     }
 
     public static BankAccount toBankAccount(BankAccountDTO aDTO){
@@ -36,7 +37,7 @@ public class DTOMapper {
             t.getFee(),
             t.getDate(),
             t.getDescription(),
-            null
+                null
                     );
 
         }

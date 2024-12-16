@@ -1,11 +1,9 @@
-# Assessment-springboot-jpa
-## Entrega de assessment #4
-Creación de una aplicación de manejo de cuenta bancaria con Springboot y JPA
+# Assessment-springboot-mongodb
+## Entrega de assessment #5
+Aplicación de manejo de cuenta bancaria con Springboot y MongoDB: Migración.
 
 ## Consideraciones
-- Uso de JPA
-- Validaciones en DTOs
-- Creación de DTOs manuales
-- Arquitectura por capas
-- Buen diseño restful - ResponseEntity.class
-- Relaciones entre entidades, excepto ManyToMany
+
+- Validaciones
+- Implementación Swagger
+- Pruebas unitarias: Cobertura al 100% - Pruebas hacia servicios, controladores y al repositorio. Montaje de pruebas positivas y negativas.

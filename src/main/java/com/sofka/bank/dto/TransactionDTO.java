@@ -1,28 +1,34 @@
 package com.sofka.bank.dto;
 
+import com.sofka.bank.entity.TransactionType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDateTime;
 
 public class TransactionDTO {
-    private Long id;
+    private String id;
 
     @NotNull
-    private String transactionType;
+    private TransactionType transactionType;
 
-    @Positive
+    @Positive(message = "Amount must be positive")
     private double amount;
 
+    @NotNull
     private double fee;
+
     private LocalDateTime date;
 
+    @NotBlank
     private String description;
-
 
     private BankAccountDTO bankAccount;
 
-    public TransactionDTO(Long id, String transactionType, double amount, double fee, LocalDateTime date, String description, BankAccountDTO bankAccountDTO) {
+    public TransactionDTO(String id, TransactionType transactionType, double amount, double fee, LocalDateTime date,
+                          String description, BankAccountDTO bankAccountDTO) {
         this.id = id;
         this.transactionType = transactionType;
         this.amount = amount;
@@ -32,17 +38,10 @@ public class TransactionDTO {
         this.bankAccount = bankAccountDTO;
     }
 
-    public void validar() {
-        if (!transactionType.matches("DEPOSIT_ATM|DEPOSIT_OTHER_ACCOUNT|WITHDRAW_ATM|ONLINE_PURCHASE" +
-                "BRANCH_DEPOSIT|POS_CARD_PURCHASE")) {
-            throw new IllegalArgumentException("Tipo de transacción no válido.");
-        }
-    }
 
-    // Getters and Setters
-    public Long getId() {return id;}
+    public String getId() {return id;}
 
-    public String getTransactionType() {
+    public TransactionType getTransactionType() {
         return transactionType;
     }
     public double getAmount(){
@@ -63,11 +62,11 @@ public class TransactionDTO {
         return bankAccount;
     }
 
-    public void setId(Long id){
+    public void setId(String id){
         this.id = id;
     }
 
-    public void setTransactionType(String transactionType) {
+    public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
     }
 

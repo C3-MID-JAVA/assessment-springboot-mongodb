@@ -1,7 +1,6 @@
 package com.sofka.bank.dto;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,21 +8,24 @@ import java.util.List;
 
 public class BankAccountDTO {
 
-    private Long id;
-
     @NotNull
+    private String id;
+
+    @NotBlank(message = "Account number cannot be blank")
+    @Pattern(regexp = "^\\d{7}$", message = "Account number must be 7 digits")
     private String accountNumber;
 
     @NotNull
+    @NotEmpty(message = "Account holder name cannot be empty")
     private String accountHolder;
 
-    @Positive
+    @PositiveOrZero
     private double globalBalance;
 
 
     private List<TransactionDTO> transactions;
 
-    public BankAccountDTO(Long id, String accountNumber, String accountHolder, double globalBalance,
+    public BankAccountDTO(String id, String accountNumber, String accountHolder, double globalBalance,
                           List<TransactionDTO> transactions) {
         this.id = id;
         this.accountNumber = accountNumber;
@@ -33,11 +35,11 @@ public class BankAccountDTO {
     }
 
     //Getters y Setters
-    public Long getId(){
+    public String getId(){
         return id;
     }
 
-    public void setId (Long id){
+    public void setId (String id){
         this.id = id;
     }
 

@@ -32,7 +32,6 @@ public class BankAccountServiceImpl implements BankAccountService {
             throw new IllegalArgumentException("Global balance must be a positive number");
         }
 
-
         if (!isAccountNumberUnique(bankAccountDTO.getAccountNumber())) {
             throw new IllegalArgumentException("Account number already exists");
         }
@@ -41,11 +40,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         BankAccount bankAccount = new BankAccount();
         bankAccount.setAccountHolder(bankAccountDTO.getAccountHolder());
         bankAccount.setGlobalBalance(bankAccountDTO.getGlobalBalance());
-
-
-        String accountNumber = bankAccountDTO.getAccountNumber() != null ? bankAccountDTO.getAccountNumber()
-                :"1000" + System.currentTimeMillis();
-        bankAccount.setAccountNumber(accountNumber);
+        bankAccount.setAccountNumber(bankAccountDTO.getAccountNumber());
 
 
         return DTOMapper.toBankAccountDTO(bankAccountRepository.save(bankAccount));
@@ -63,6 +58,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     }
 
+    @Override
     public boolean isAccountNumberUnique(String accountNumber) {
         return !bankAccountRepository.existsByAccountNumber(accountNumber);
     }

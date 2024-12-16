@@ -1,11 +1,11 @@
 package com.sofka.bank.repository;
 
 import com.sofka.bank.entity.BankAccount;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
+public interface BankAccountRepository extends MongoRepository<BankAccount, String> {
     boolean existsByAccountNumber(String accountNumber);
 
 }

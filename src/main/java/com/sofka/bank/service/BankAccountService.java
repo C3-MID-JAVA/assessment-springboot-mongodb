@@ -7,4 +7,5 @@ import java.util.List;
 public interface BankAccountService {
     BankAccountDTO createAccount(BankAccountDTO bankAccountDTO);
     List<BankAccountDTO> getAllAccounts ();
+    boolean isAccountNumberUnique(String accountNumber);
 }

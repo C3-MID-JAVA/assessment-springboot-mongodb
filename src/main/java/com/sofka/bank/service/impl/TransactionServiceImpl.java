@@ -3,6 +3,7 @@ package com.sofka.bank.service.impl;
 import com.sofka.bank.dto.TransactionDTO;
 import com.sofka.bank.entity.BankAccount;
 import com.sofka.bank.entity.Transaction;
+import com.sofka.bank.entity.TransactionType;
 import com.sofka.bank.exceptions.AccountNotFoundException;
 import com.sofka.bank.exceptions.InsufficientFundsException;
 import com.sofka.bank.mapper.DTOMapper;
@@ -28,16 +29,22 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public TransactionDTO registerTransaction(Long accountId, TransactionDTO transactionDTO) {
+    public TransactionDTO registerTransaction(String accountId, TransactionDTO transactionDTO) {
         BankAccount account = bankAccountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException("Account with ID " + accountId + " not found"));
 
-        double fee = calculateFee(transactionDTO.getTransactionType());
+        double fee = transactionDTO.getTransactionType().getFee();
 
-        if (transactionDTO.getTransactionType().matches("WITHDRAW.*|ONLINE_PURCHASE|DEPOSIT_ATM " +
-                "|DEPOSIT_OTHER_ACCOUNT") &&
-                account.getGlobalBalance() < transactionDTO.getAmount() + fee) {
-            throw new InsufficientFundsException("Insufficient balance for transaction");
+        if (transactionDTO.getTransactionType() == TransactionType.WITHDRAW_ATM ||
+                transactionDTO.getTransactionType() == TransactionType.ONLINE_PURCHASE ||
+                transactionDTO.getTransactionType() == TransactionType.DEPOSIT_ATM ||
+                transactionDTO.getTransactionType() == TransactionType.DEPOSIT_OTHER_ACCOUNT ||
+                transactionDTO.getTransactionType() == TransactionType.BRANCH_DEPOSIT ||
+                        transactionDTO.getTransactionType() == TransactionType.ONSITE_CARD_PURCHASE){
+
+            if (account.getGlobalBalance() < transactionDTO.getAmount() + fee) {
+                throw new InsufficientFundsException("Insufficient balance for transaction");
+            }
         }
 
 
@@ -49,32 +56,20 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setDescription(transactionDTO.getDescription());
         transaction.setBankAccount(account);
 
-
         account.setGlobalBalance(account.getGlobalBalance() - transactionDTO.getAmount() - fee);
 
         bankAccountRepository.save(account);
         Transaction savedTransaction = transactionRepository.save(transaction);
 
-
         return DTOMapper.toTransactionDTO(savedTransaction);
     }
 
     @Override
-    public Double getGlobalBalance(Long accountId) {
+    public Double getGlobalBalance(String accountId) {
         BankAccount account = bankAccountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException("Account with ID " + accountId + " not found"));
         return account.getGlobalBalance();
     }
 
-
-    private double calculateFee(String type) {
-        return switch (type) {
-            case "DEPOSIT_ATM" -> 2.0;
-            case "DEPOSIT_OTHER_ACCOUNT" -> 1.5;
-            case "WITHDRAW_ATM" -> 1.0;
-            case "ONLINE_PURCHASE" -> 5.0;
-            default -> 0.0;
-        };
-    }
 
 }
