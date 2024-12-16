@@ -1,46 +1,34 @@
 package org.example.financespro.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.math.BigDecimal;
 
-/** Represents a financial transaction. */
-@Entity
+@Document("transactions")
 public class Transaction {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  @ManyToOne private Account account;
-
-  @Column(nullable = false)
+  private String id;
+  private String accountId;
   private String type;
-
-  @Column(nullable = false)
   private BigDecimal amount;
-
-  @Column(nullable = false)
   private BigDecimal transactionCost;
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 
-  public Account getAccount() {
-    return account;
+  public String getAccountId() {
+    return accountId;
   }
 
-  public void setAccount(Account account) {
-    this.account = account;
+  public void setAccountId(String accountId) {
+    this.accountId = accountId;
   }
 
   public String getType() {
