@@ -1,8 +1,6 @@
 package org.example.financespro.service.impl;
 
 import java.math.BigDecimal;
-import java.util.Optional;
-
 import org.example.financespro.dto.request.AccountRequestDto;
 import org.example.financespro.dto.response.AccountResponseDto;
 import org.example.financespro.exception.CustomException;
@@ -23,39 +21,40 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public AccountResponseDto createAccount(AccountRequestDto requestDTO) {
+    // Validaciones explícitas
     if (requestDTO.getNumber() == null || requestDTO.getNumber().isBlank()) {
       throw new CustomException("Account number cannot be null or blank");
     }
-    if (requestDTO.getInitialBalance() == null || requestDTO.getInitialBalance() < 0) {
+    if (requestDTO.getInitialBalance() == null
+        || requestDTO.getInitialBalance().compareTo(BigDecimal.ZERO) <= 0) {
       throw new CustomException("Initial balance must be a positive value");
     }
 
-
-    Optional<Account> existingAccount = accountRepository.findByAccountNumber(requestDTO.getNumber());
-    if (existingAccount.isPresent()) {
-      throw new CustomException("Account with the same number already exists");
+    // Comprueba si la cuenta ya existe
+    if (accountRepository.findByAccountNumber(requestDTO.getNumber()).isPresent()) {
+      throw new CustomException("Account number already exists: " + requestDTO.getNumber());
     }
 
-
+    // Simula la creación de una cuenta
     Account account = new Account();
     account.setAccountNumber(requestDTO.getNumber());
-    account.setBalance(BigDecimal.valueOf(requestDTO.getInitialBalance()));
-    account = accountRepository.save(account);
+    account.setBalance(requestDTO.getInitialBalance());
 
-    return AccountMapper.toResponseDTO(account);
+    Account savedAccount = accountRepository.save(account);
+
+    // Valida el resultado de save
+    if (savedAccount == null) {
+      throw new CustomException("Account creation failed");
+    }
+
+    return AccountMapper.toResponseDTO(savedAccount);
   }
 
   @Override
-  public AccountResponseDto getAccountDetailsByNumber(String accountId) {
-
-    if (accountId == null || accountId.isBlank()) {
-      throw new CustomException("Account ID cannot be null or blank");
-    }
-
-
+  public AccountResponseDto getAccountDetailsByNumber(String accountNumber) {
     return accountRepository
-            .findById(accountId)
-            .map(AccountMapper::toResponseDTO)
-            .orElseThrow(() -> new CustomException("Account not found with ID: " + accountId));
+        .findByAccountNumber(accountNumber)
+        .map(AccountMapper::toResponseDTO)
+        .orElseThrow(() -> new CustomException("Account not found with number: " + accountNumber));
   }
 }
