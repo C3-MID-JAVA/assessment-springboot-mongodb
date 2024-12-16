@@ -5,16 +5,10 @@ import org.example.financespro.dto.response.AccountResponseDto;
 import org.example.financespro.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-/**
- * Controller for managing accounts.
- */
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
@@ -26,19 +20,13 @@ public class AccountController {
   }
 
   @PostMapping
-  public ResponseEntity<AccountResponseDto> createAccount(
-      @Validated @RequestBody AccountRequestDto request) {
+  public ResponseEntity<AccountResponseDto> createAccount(@Valid @RequestBody AccountRequestDto request) {
     return ResponseEntity.ok(accountService.createAccount(request));
   }
 
-  /**
-   * Retrieves an account by its ID.
-   *
-   * @param id the ID of the account to retrieve
-   * @return the account details
-   */
-  @GetMapping("/{id}")
-  public ResponseEntity<AccountResponseDto> getAccount(@PathVariable Long id) {
-    return ResponseEntity.ok(accountService.getAccountById(id));
+  @PostMapping("/details")
+  public ResponseEntity<AccountResponseDto> getAccount(@Valid @RequestBody AccountRequestDto request) {
+    // Assuming the `accountNumber` in the request is used to fetch the account details
+    return ResponseEntity.ok(accountService.getAccountById(request.getAccountNumber()));
   }
 }

@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -18,8 +20,7 @@ public class TransactionController {
   }
 
   @PostMapping
-  public ResponseEntity<TransactionResponseDto> processTransaction(
-      @Validated @RequestBody TransactionRequestDto request) {
+  public ResponseEntity<TransactionResponseDto> processTransaction(@Valid @RequestBody TransactionRequestDto request) {
     return ResponseEntity.ok(transactionService.processTransaction(request));
   }
 }
