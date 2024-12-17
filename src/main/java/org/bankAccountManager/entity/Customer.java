@@ -1,15 +1,15 @@
 package org.bankAccountManager.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+import java.util.List;
+
+@Document(collection = "customer")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String firstName;
     private String lastName;
@@ -17,17 +17,28 @@ public class Customer {
     private String email;
     private String phone;
     private String address;
+    @DBRef
+    private List<Account> accounts;
 
-    public Customer(String address, String email, String firstName, int id, String lastName, String phone) {
+    public Customer(String address, String email, String firstName, int id, String lastName, String phone, List<Account> accounts) {
         this.address = address;
         this.email = email;
         this.firstName = firstName;
         this.id = id;
         this.lastName = lastName;
         this.phone = phone;
+        this.accounts = accounts;
     }
 
     public Customer() {
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public String getAddress() {

@@ -9,7 +9,8 @@ public class DTOResponseMapper {
                 a.getAccountNumber(),
                 a.getAccountType(),
                 a.getBalance(),
-                toCustomerResponseDTO(a.getCustomer()),
+                a.getCards().stream().map(DTOResponseMapper::toCardResponseDTO).toList(),
+                a.getTransactions().stream().map(DTOResponseMapper::toTransactionResponseDTO).toList(),
                 a.getId());
     }
 
@@ -23,7 +24,6 @@ public class DTOResponseMapper {
 
     public static CardResponseDTO toCardResponseDTO(Card c) {
         return new CardResponseDTO(
-                toAccountResponseDTO(c.getAccount()),
                 c.getCardNumber(),
                 c.getCardType(),
                 c.getCvv(),
@@ -38,18 +38,17 @@ public class DTOResponseMapper {
                 c.getFirstName(),
                 c.getId(),
                 c.getLastName(),
-                c.getPhone());
+                c.getPhone(),
+                c.getAccounts().stream().map(DTOResponseMapper::toAccountResponseDTO).toList());
     }
 
     public static TransactionResponseDTO toTransactionResponseDTO(Transaction t) {
         return new TransactionResponseDTO(
                 t.getAmount(),
-                toBranchResponseDTO(t.getBranch()),
+                t.getBranches().stream().map(DTOResponseMapper::toBranchResponseDTO).toList(),
                 t.getDate(),
                 t.getDescription(),
-                toAccountResponseDTO(t.getDestinationAccount()),
                 t.getId(),
-                toAccountResponseDTO(t.getSourceAccount()),
                 t.getType());
     }
 
@@ -58,7 +57,8 @@ public class DTOResponseMapper {
                 aDTO.getAccount_number(),
                 aDTO.getAccount_type(),
                 aDTO.getBalance(),
-                toCustomer(aDTO.getCustomer()),
+                aDTO.getCards().stream().map(DTOResponseMapper::toCard).toList(),
+                aDTO.getTransactions().stream().map(DTOResponseMapper::toTransaction).toList(),
                 aDTO.getId());
     }
 
@@ -72,7 +72,6 @@ public class DTOResponseMapper {
 
     public static Card toCard(CardResponseDTO cDTO) {
         return new Card(
-                toAccount(cDTO.getAccount()),
                 cDTO.getCard_number(),
                 cDTO.getCard_type(),
                 cDTO.getExpiration_date(),
@@ -86,18 +85,17 @@ public class DTOResponseMapper {
                 cDTO.getFirst_name(),
                 cDTO.getId(),
                 cDTO.getLast_name(),
-                cDTO.getPhone());
+                cDTO.getPhone(),
+                cDTO.getAccounts().stream().map(DTOResponseMapper::toAccount).toList());
     }
 
     public static Transaction toTransaction(TransactionResponseDTO tDTO) {
         return new Transaction(
                 tDTO.getAmount(),
-                toBranch(tDTO.getBranch()),
+                tDTO.getBranches().stream().map(DTOResponseMapper::toBranch).toList(),
                 tDTO.getDate(),
                 tDTO.getDescription(),
-                toAccount(tDTO.getDestination_account()),
                 tDTO.getId(),
-                toAccount(tDTO.getSource_account()),
                 tDTO.getType());
     }
 }

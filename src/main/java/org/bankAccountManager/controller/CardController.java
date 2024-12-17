@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.bankAccountManager.DTO.request.AccountRequestDTO;
 import org.bankAccountManager.DTO.request.CardRequestDTO;
 import org.bankAccountManager.DTO.response.CardResponseDTO;
 import org.bankAccountManager.mapper.DTOResponseMapper;
@@ -74,8 +75,8 @@ public class CardController {
             @ApiResponse(responseCode = "404", description = "Account not found")
     })
     @GetMapping("/account")
-    public ResponseEntity<List<CardResponseDTO>> getCardsByAccountId(@RequestBody CardRequestDTO card) {
-        return ResponseEntity.ok(cardService.getCardsByAccountId(card.getAccount().getId())
+    public ResponseEntity<List<CardResponseDTO>> getCardsByAccountId(@RequestBody AccountRequestDTO account) {
+        return ResponseEntity.ok(cardService.getCardsByAccountId(account.getId())
                 .stream().map(DTOResponseMapper::toCardResponseDTO).toList());
     }
 

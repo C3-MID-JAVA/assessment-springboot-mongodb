@@ -18,7 +18,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter") // Testing con JUnit
     implementation("org.springframework.boot:spring-boot-starter-security") // Para el auth
     implementation("org.springframework.boot:spring-boot-starter-web") // Para el mapeo de metodos HTTP
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa") // Para la persistencia de datos/entidades
+    //implementation("org.springframework.boot:spring-boot-starter-data-jpa") // Para la persistencia de datos/entidades
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb") // Para persistencia en mongo
     implementation("org.springframework.boot:spring-boot-starter-validation") // Para validar parametros
     testImplementation("org.springframework.boot:spring-boot-starter-test") // Para pruebas unitarias
     testImplementation("org.springframework.security:spring-security-test") // Para security en pruebas

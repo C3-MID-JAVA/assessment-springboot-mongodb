@@ -9,7 +9,6 @@ import org.bankAccountManager.DTO.response.BranchResponseDTO;
 import org.bankAccountManager.mapper.DTOResponseMapper;
 import org.bankAccountManager.service.implementations.BranchServiceImplementation;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

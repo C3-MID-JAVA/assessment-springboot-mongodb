@@ -1,7 +1,5 @@
 package org.bankAccountManager.exception;
 
-import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.TransientPropertyValueException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +27,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    /*@ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFound(EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entity not found: " + ex.getMessage());
-    }
+    }*/
 
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -72,8 +70,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + ex.getMessage());
     }
 
-    @ExceptionHandler(TransientPropertyValueException.class)
+    /*@ExceptionHandler(TransientPropertyValueException.class)
     public ResponseEntity<String> handleTransientPropertyValueException(TransientPropertyValueException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A reference to a transient entity was found: " + ex.getMessage());
-    }
+    }*/
 }

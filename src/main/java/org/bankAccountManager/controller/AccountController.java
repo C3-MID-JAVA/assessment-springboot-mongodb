@@ -5,8 +5,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.bankAccountManager.DTO.request.AccountRequestDTO;
+import org.bankAccountManager.DTO.request.CustomerRequestDTO;
 import org.bankAccountManager.DTO.response.AccountResponseDTO;
 import org.bankAccountManager.mapper.DTOResponseMapper;
+import org.bankAccountManager.repository.CustomerRepository;
 import org.bankAccountManager.service.implementations.AccountServiceImplementation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +25,11 @@ import static org.bankAccountManager.mapper.DTOResponseMapper.toAccountResponseD
 public class AccountController {
 
     private final AccountServiceImplementation accountService;
+    private final CustomerRepository customerRepository;
 
-    public AccountController(AccountServiceImplementation accountService) {
+    public AccountController(AccountServiceImplementation accountService, CustomerRepository customerRepository) {
         this.accountService = accountService;
+        this.customerRepository = customerRepository;
     }
 
     @Operation(summary = "Create a new account", description = "Create a new account with the provided details")
@@ -54,8 +58,9 @@ public class AccountController {
             @ApiResponse(responseCode = "404", description = "Account not found")
     })
     @GetMapping("/customer")
-    public ResponseEntity<AccountResponseDTO> getAccountByCustomerId(@RequestBody AccountRequestDTO account) {
-        return ResponseEntity.ok(toAccountResponseDTO(accountService.getAccountByCustomerId(account.getCustomer().getId())));
+    public ResponseEntity<List<AccountResponseDTO>> getAccountByCustomerId(@RequestBody CustomerRequestDTO customer) {
+        return ResponseEntity.ok(customerRepository.findCustomerById(customer.getId()).getAccounts().stream().map(DTOResponseMapper::toAccountResponseDTO)
+                .toList());
     }
 
     @Operation(summary = "Retrieve all accounts", description = "Get the list of all accounts")

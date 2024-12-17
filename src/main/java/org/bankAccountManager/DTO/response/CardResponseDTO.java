@@ -4,14 +4,12 @@ import java.sql.Timestamp;
 
 public class CardResponseDTO {
     private int id;
-    private AccountResponseDTO account;
     private String card_number;
     private String card_type;
     private Timestamp expiration_date;
     private String cvv;
 
-    public CardResponseDTO(AccountResponseDTO account, String card_number, String card_type, String cvv, Timestamp expiration_date, int id) {
-        this.account = account;
+    public CardResponseDTO(String card_number, String card_type, String cvv, Timestamp expiration_date, int id) {
         this.card_number = card_number;
         this.card_type = card_type;
         this.cvv = cvv;
@@ -20,14 +18,6 @@ public class CardResponseDTO {
     }
 
     public CardResponseDTO() {
-    }
-
-    public AccountResponseDTO getAccount() {
-        return account;
-    }
-
-    public void setAccount(AccountResponseDTO account) {
-        this.account = account;
     }
 
     public String getCard_number() {

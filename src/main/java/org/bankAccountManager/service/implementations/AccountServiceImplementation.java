@@ -2,6 +2,7 @@ package org.bankAccountManager.service.implementations;
 
 import org.bankAccountManager.entity.Account;
 import org.bankAccountManager.repository.AccountRepository;
+import org.bankAccountManager.repository.CustomerRepository;
 import org.bankAccountManager.service.interfaces.AccountService;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,11 @@ import java.util.List;
 public class AccountServiceImplementation implements AccountService {
 
     private final AccountRepository accountRepository;
+    private final CustomerRepository customerRepository;
 
-    public AccountServiceImplementation(AccountRepository accountRepository) {
+    public AccountServiceImplementation(AccountRepository accountRepository, CustomerRepository customerRepository) {
         this.accountRepository = accountRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -29,8 +32,8 @@ public class AccountServiceImplementation implements AccountService {
     }
 
     @Override
-    public Account getAccountByCustomerId(int customer_id) {
-        return accountRepository.findAccountByCustomerId(customer_id);
+    public List<Account> getAccountsByCustomerId(int customer_id) {
+        return customerRepository.findCustomerById(customer_id).getAccounts();
     }
 
     @Override

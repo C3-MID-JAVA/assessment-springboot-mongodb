@@ -4,10 +4,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.bankAccountManager.DTO.request.AccountRequestDTO;
+import org.bankAccountManager.DTO.request.BranchRequestDTO;
 import org.bankAccountManager.DTO.request.TransactionRequestDTO;
 import org.bankAccountManager.DTO.response.TransactionResponseDTO;
 import org.bankAccountManager.mapper.DTOResponseMapper;
 import org.bankAccountManager.service.implementations.TransactionServiceImplementation;
+import org.bankAccountManager.service.interfaces.BranchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +27,11 @@ public class TransactionController {
 
 
     private final TransactionServiceImplementation transactionService;
+    private final BranchService branchService;
 
-    public TransactionController(TransactionServiceImplementation transactionService) {
+    public TransactionController(TransactionServiceImplementation transactionService, BranchService branchService) {
         this.transactionService = transactionService;
+        this.branchService = branchService;
     }
 
     @Operation(summary = "Create a new transaction", description = "Add a new transaction to the system")
@@ -65,9 +70,10 @@ public class TransactionController {
             @ApiResponse(responseCode = "404", description = "Branch not found")
     })
     @GetMapping("/branch")
-    public ResponseEntity<List<TransactionResponseDTO>> getTransactionsByBranchId(@RequestBody TransactionRequestDTO transaction) {
-        return ResponseEntity.ok(transactionService.getTransactionsByBranchId(transaction.getBranch().getId())
-                .stream().map(DTOResponseMapper::toTransactionResponseDTO).toList());
+    public ResponseEntity<List<TransactionResponseDTO>> getTransactionsByBranchId(@RequestBody BranchRequestDTO branch) {
+        return ResponseEntity.ok(transactionService.getAllTransactions().stream()
+                .filter(transaction -> transaction.getBranches().contains(branch))
+                .map(DTOResponseMapper::toTransactionResponseDTO).toList());
     }
 
     @Operation(summary = "Retrieve transactions by destination account ID", description = "Get transactions linked to a specific destination account")
@@ -76,8 +82,8 @@ public class TransactionController {
             @ApiResponse(responseCode = "404", description = "Account not found")
     })
     @GetMapping("/account/destination")
-    public ResponseEntity<List<TransactionResponseDTO>> getTransactionsByDestinationAccountId(@RequestBody TransactionRequestDTO transaction) {
-        return ResponseEntity.ok(transactionService.getTransactionsByDestinationAccountId(transaction.getDestination_account().getId())
+    public ResponseEntity<List<TransactionResponseDTO>> getTransactionsByDestinationAccountId(@RequestBody AccountRequestDTO account) {
+        return ResponseEntity.ok(transactionService.getTransactionsByDestinationAccountId(account.getId())
                 .stream().map(DTOResponseMapper::toTransactionResponseDTO).toList());
     }
 
@@ -87,8 +93,8 @@ public class TransactionController {
             @ApiResponse(responseCode = "404", description = "Account not found")
     })
     @GetMapping("/account/source")
-    public ResponseEntity<List<TransactionResponseDTO>> getTransactionsBySourceAccountId(@RequestBody TransactionRequestDTO transaction) {
-        return ResponseEntity.ok(transactionService.getTransactionsBySourceAccountId(transaction.getSource_account().getId())
+    public ResponseEntity<List<TransactionResponseDTO>> getTransactionsBySourceAccountId(@RequestBody AccountRequestDTO account) {
+        return ResponseEntity.ok(transactionService.getTransactionsBySourceAccountId(account.getId())
                 .stream().map(DTOResponseMapper::toTransactionResponseDTO).toList());
     }
 

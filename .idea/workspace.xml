@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1f75dda3-d360-4445-93a6-1ef3d7274df1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gradle/8.8/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.8/dependencies-accessors/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.8/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.8/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/controller/AccountControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/controller/BranchControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/controller/CardControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/controller/CustomerControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/controller/TransactionControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/repository/AccountRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/repository/BranchRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/repository/CardRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/repository/CustomerRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/repository/TransactionRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/service/AccountServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/service/BranchServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/service/CardServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/service/CustomerServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/bankAccountManager/service/TransactionServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/request/AccountRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/request/AccountRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/request/CardRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/request/CardRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/request/CustomerRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/request/CustomerRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/request/TransactionRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/request/TransactionRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/response/AccountResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/response/AccountResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/response/CardResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/response/CardResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/response/CustomerResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/response/CustomerResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/response/TransactionResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/DTO/response/TransactionResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/INFO.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/INFO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/controller/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/controller/BranchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/controller/BranchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/controller/CardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/controller/CardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/controller/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/controller/TransactionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/entity/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/entity/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/entity/Branch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/entity/Branch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/entity/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/entity/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/entity/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/entity/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/entity/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/entity/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/mapper/DTORequestMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/mapper/DTORequestMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/mapper/DTOResponseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/mapper/DTOResponseMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/repository/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/repository/BranchRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/repository/BranchRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/repository/CardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/repository/CardRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/repository/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/repository/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/repository/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/repository/TransactionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/service/implementations/AccountServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/service/implementations/AccountServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/service/implementations/CardServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/service/implementations/CardServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/service/implementations/TransactionServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/service/implementations/TransactionServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/service/interfaces/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/service/interfaces/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/service/interfaces/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bankAccountManager/service/interfaces/TransactionService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="AnnotationType" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2qIsE9OyvrC8Ik6wI8QuA0Iq1E7" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build untitled.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.bankAccountManager.entity" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.bankAccountManager.repository" />
+      <recent name="org.bankAccountManager.service" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="untitled.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.bankAccountManager.Main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.145" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1f75dda3-d360-4445-93a6-1ef3d7274df1" name="Changes" comment="" />
+      <created>1734361309227</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734361309227</updated>
+      <workItem from="1734361310289" duration="10000" />
+      <workItem from="1734362154559" duration="8000" />
+      <workItem from="1734362171634" duration="2066000" />
+      <workItem from="1734364269315" duration="15862000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

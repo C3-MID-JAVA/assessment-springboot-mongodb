@@ -1,6 +1,7 @@
 package org.bankAccountManager.service.implementations;
 
 import org.bankAccountManager.entity.Account;
+import org.bankAccountManager.entity.Branch;
 import org.bankAccountManager.entity.Transaction;
 import org.bankAccountManager.repository.AccountRepository;
 import org.bankAccountManager.repository.TransactionRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,16 +47,14 @@ public class TransactionServiceImplementation implements TransactionService {
             case "branch_transfer":
             case "another_account_deposit":
             case "atm_deposit":
-                executeTransaction(transaction.getSourceAccount(),
-                        transaction.getAmount().add(transactionTypes.get(transaction.getType())).negate());
-                executeTransaction(transaction.getDestinationAccount(), transaction.getAmount());
+                executeTransaction(transaction,
+                        transaction.getAmount().add(transactionTypes.get(transaction.getType())));
                 break;
             case "store_card_purchase":
             case "online_card_purchase":
             case "atm_withdrawal":
-                executeTransaction(transaction.getDestinationAccount(),
+                executeTransaction(transaction,
                         transaction.getAmount().add(transactionTypes.get(transaction.getType())).negate());
-                executeTransaction(transaction.getSourceAccount(), transaction.getAmount());
                 break;
             default:
                 throw new IllegalArgumentException("Unhandled transaction type: " + transaction.getType());
@@ -62,7 +62,10 @@ public class TransactionServiceImplementation implements TransactionService {
         return transactionRepository.save(transaction);
     }
 
-    private void executeTransaction(Account account, BigDecimal amount) {
+    private void executeTransaction(Transaction transaction, BigDecimal amount) {
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.add(transaction);
+        Account account = accountRepository.getAccountByTransactions(transactions);
         if (amount.compareTo(BigDecimal.ZERO) < 0 && account.getBalance().compareTo(amount.abs()) < 0) {
             throw new IllegalArgumentException("Insufficient balance in account: " + account.getId());
         }
@@ -81,8 +84,8 @@ public class TransactionServiceImplementation implements TransactionService {
     }
 
     @Override
-    public List<Transaction> getTransactionsByBranchId(int branch_id) {
-        return transactionRepository.findTransactionsByBranchId(branch_id);
+    public List<Transaction> findTransactionsByBranches(List<Branch> branches) {
+        return transactionRepository.findTransactionsByBranches(branches);
     }
 
     @Override

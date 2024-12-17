@@ -1,5 +1,6 @@
 package org.bankAccountManager.service.interfaces;
 
+import org.bankAccountManager.entity.Branch;
 import org.bankAccountManager.entity.Transaction;
 
 import java.sql.Timestamp;
@@ -12,7 +13,7 @@ public interface TransactionService {
 
     List<Transaction> getAllTransactions();
 
-    List<Transaction> getTransactionsByBranchId(int branch_id);
+    List<Transaction> findTransactionsByBranches(List<Branch> branches);
 
     List<Transaction> getTransactionsByDestinationAccountId(int destination_account_id);
 

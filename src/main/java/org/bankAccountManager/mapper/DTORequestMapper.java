@@ -9,7 +9,8 @@ public class DTORequestMapper {
                 a.getAccountNumber(),
                 a.getAccountType(),
                 a.getBalance(),
-                toCustomerRequestDTO(a.getCustomer()),
+                a.getCards().stream().map(DTORequestMapper::toCardRequestDTO).toList(),
+                a.getTransactions().stream().map(DTORequestMapper::toTransactionRequestDTO).toList(),
                 a.getId());
     }
 
@@ -23,7 +24,6 @@ public class DTORequestMapper {
 
     public static CardRequestDTO toCardRequestDTO(Card c) {
         return new CardRequestDTO(
-                toAccountRequestDTO(c.getAccount()),
                 c.getCardNumber(),
                 c.getCardType(),
                 c.getCvv(),
@@ -38,18 +38,17 @@ public class DTORequestMapper {
                 c.getFirstName(),
                 c.getId(),
                 c.getLastName(),
-                c.getPhone());
+                c.getPhone(),
+                c.getAccounts().stream().map(DTORequestMapper::toAccountRequestDTO).toList());
     }
 
     public static TransactionRequestDTO toTransactionRequestDTO(Transaction t) {
         return new TransactionRequestDTO(
                 t.getAmount(),
-                toBranchRequestDTO(t.getBranch()),
+                t.getBranches().stream().map(DTORequestMapper::toBranchRequestDTO).toList(),
                 t.getDate(),
                 t.getDescription(),
-                toAccountRequestDTO(t.getDestinationAccount()),
                 t.getId(),
-                toAccountRequestDTO(t.getSourceAccount()),
                 t.getType());
     }
 
@@ -58,7 +57,8 @@ public class DTORequestMapper {
                 aDTO.getAccount_number(),
                 aDTO.getAccount_type(),
                 aDTO.getBalance(),
-                toCustomer(aDTO.getCustomer()),
+                aDTO.getCards().stream().map(DTORequestMapper::toCard).toList(),
+                aDTO.getTransactions().stream().map(DTORequestMapper::toTransaction).toList(),
                 aDTO.getId());
     }
 
@@ -72,7 +72,6 @@ public class DTORequestMapper {
 
     public static Card toCard(CardRequestDTO cDTO) {
         return new Card(
-                toAccount(cDTO.getAccount()),
                 cDTO.getCard_number(),
                 cDTO.getCard_type(),
                 cDTO.getExpiration_date(),
@@ -86,18 +85,17 @@ public class DTORequestMapper {
                 cDTO.getFirst_name(),
                 cDTO.getId(),
                 cDTO.getLast_name(),
-                cDTO.getPhone());
+                cDTO.getPhone(),
+                cDTO.getAccounts().stream().map(DTORequestMapper::toAccount).toList());
     }
 
     public static Transaction toTransaction(TransactionRequestDTO tDTO) {
         return new Transaction(
                 tDTO.getAmount(),
-                toBranch(tDTO.getBranch()),
+                tDTO.getBranches().stream().map(DTORequestMapper::toBranch).toList(),
                 tDTO.getDate(),
                 tDTO.getDescription(),
-                toAccount(tDTO.getDestination_account()),
                 tDTO.getId(),
-                toAccount(tDTO.getSource_account()),
                 tDTO.getType());
     }
 }

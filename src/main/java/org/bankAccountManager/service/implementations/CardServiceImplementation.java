@@ -1,6 +1,7 @@
 package org.bankAccountManager.service.implementations;
 
 import org.bankAccountManager.entity.Card;
+import org.bankAccountManager.repository.AccountRepository;
 import org.bankAccountManager.repository.CardRepository;
 import org.bankAccountManager.service.interfaces.CardService;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,11 @@ import java.util.List;
 public class CardServiceImplementation implements CardService {
 
     private final CardRepository cardRepository;
+    private final AccountRepository accountRepository;
 
-    public CardServiceImplementation(CardRepository cardRepository) {
+    public CardServiceImplementation(CardRepository cardRepository, AccountRepository accountRepository) {
         this.cardRepository = cardRepository;
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class CardServiceImplementation implements CardService {
 
     @Override
     public List<Card> getCardsByAccountId(int account_id) {
-        return cardRepository.findCardsByAccountId(account_id);
+        return accountRepository.findAccountById(account_id).getCards();
     }
 
     @Override

@@ -1,37 +1,32 @@
 package org.bankAccountManager.entity;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
-@Entity
+@Document(collection = "transaction")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "source_account_id")
-    private Account sourceAccount;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "destination_account_id")
-    private Account destinationAccount;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "branch_id")
-    private Branch branch;
+    @DBRef
+    private List<Branch> branches;
     private Timestamp date;
     private String type;
     private BigDecimal amount;
     private String description;
+    private int destinationAccountId;
+    private int sourceAccountId;
 
-    public Transaction(BigDecimal amount, Branch branch, Timestamp date, String description, Account destinationAccount, int id, Account sourceAccount, String type) {
+    public Transaction(BigDecimal amount, List<Branch> branches, Timestamp date, String description, int id, String type) {
         this.amount = amount;
-        this.branch = branch;
+        this.branches = branches;
         this.date = date;
         this.description = description;
-        this.destinationAccount = destinationAccount;
         this.id = id;
-        this.sourceAccount = sourceAccount;
         this.type = type;
     }
 
@@ -46,12 +41,12 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public Branch getBranch() {
-        return branch;
+    public List<Branch> getBranches() {
+        return branches;
     }
 
-    public void setBranch_id(Branch branch) {
-        this.branch = branch;
+    public void setBranches(List<Branch> branches) {
+        this.branches = branches;
     }
 
     public Timestamp getDate() {
@@ -70,14 +65,6 @@ public class Transaction {
         this.description = description;
     }
 
-    public Account getDestinationAccount() {
-        return destinationAccount;
-    }
-
-    public void setDestinationAccount(Account destination_account) {
-        this.destinationAccount = destination_account;
-    }
-
     public int getId() {
         return id;
     }
@@ -86,19 +73,27 @@ public class Transaction {
         this.id = id;
     }
 
-    public Account getSourceAccount() {
-        return sourceAccount;
-    }
-
-    public void setSourceAccount(Account source_account) {
-        this.sourceAccount = source_account;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getDestinationAccountId() {
+        return destinationAccountId;
+    }
+
+    public void setDestinationAccountId(int destinationAccountId) {
+        this.destinationAccountId = destinationAccountId;
+    }
+
+    public int getSourceAccountId() {
+        return sourceAccountId;
+    }
+
+    public void setSourceAccountId(int sourceAccountId) {
+        this.sourceAccountId = sourceAccountId;
     }
 }

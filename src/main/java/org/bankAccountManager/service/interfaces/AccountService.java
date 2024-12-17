@@ -9,7 +9,7 @@ public interface AccountService {
 
     Account getAccountById(int id);
 
-    Account getAccountByCustomerId(int customer_id);
+    List<Account> getAccountsByCustomerId(int customer_id);
 
     List<Account> getAllAccounts();
 

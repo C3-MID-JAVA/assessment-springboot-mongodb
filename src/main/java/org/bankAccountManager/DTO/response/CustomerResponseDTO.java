@@ -1,6 +1,9 @@
 package org.bankAccountManager.DTO.response;
 
 import jakarta.validation.constraints.Email;
+import org.bankAccountManager.entity.Account;
+
+import java.util.List;
 
 public class CustomerResponseDTO {
     private int id;
@@ -10,17 +13,27 @@ public class CustomerResponseDTO {
     private String email;
     private String phone;
     private String address;
+    private List<AccountResponseDTO> accounts;
 
-    public CustomerResponseDTO(String address, String email, String first_name, int id, String last_name, String phone) {
+    public CustomerResponseDTO(String address, String email, String first_name, int id, String last_name, String phone, List<AccountResponseDTO> accounts) {
         this.address = address;
         this.email = email;
         this.first_name = first_name;
         this.id = id;
         this.last_name = last_name;
         this.phone = phone;
+        this.accounts = accounts;
     }
 
     public CustomerResponseDTO() {
+    }
+
+    public List<AccountResponseDTO> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<AccountResponseDTO> accounts) {
+        this.accounts = accounts;
     }
 
     public String getAddress() {

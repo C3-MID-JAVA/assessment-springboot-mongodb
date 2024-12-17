@@ -1,24 +1,20 @@
 package org.bankAccountManager.entity;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Timestamp;
 
-@Entity
+@Document(collection = "card")
 public class Card {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(fetch = FetchType.LAZY) // Propaga las operaciones persistentes
-    @JoinColumn(name = "account_id")
-    private Account account;
     private String cardNumber;
     private String cardType;
     private Timestamp expirationDate;
     private String cvv;
 
-    public Card(Account account, String cardNumber, String cardType, Timestamp expirationDate, int id) {
-        this.account = account;
+    public Card(String cardNumber, String cardType, Timestamp expirationDate, int id) {
         this.cardNumber = cardNumber;
         this.cardType = cardType;
         this.expirationDate = expirationDate;
@@ -26,14 +22,6 @@ public class Card {
     }
 
     public Card() {
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public String getCardNumber() {

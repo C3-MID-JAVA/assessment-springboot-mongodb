@@ -1,30 +1,50 @@
 package org.bankAccountManager.entity;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-@Entity
+@Document(collection = "account")
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String accountNumber;
     private String accountType;
     private BigDecimal balance;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @DBRef
+    private List<Card> cards;
+    @DBRef
+    private List<Transaction> transactions;
 
-    public Account(String accountNumber, String accountType, BigDecimal balance, Customer customer, int id) {
+    public Account(String accountNumber, String accountType, BigDecimal balance, List<Card> cards, List<Transaction> transactions, int id) {
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
-        this.customer = customer;
         this.id = id;
+        this.cards = cards;
+        this.transactions = transactions;
     }
 
     public Account() {
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     public String getAccountNumber() {
@@ -49,14 +69,6 @@ public class Account {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     public int getId() {
